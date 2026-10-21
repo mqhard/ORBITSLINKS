@@ -1,0 +1,20 @@
+name: orbits-links-local
+services:
+  web:
+    image: ${ORBITS_IMAGE:?Use npm run local:release or npm run local:start}
+    pull_policy: never
+    ports:
+      - "127.0.0.1:4173:80"
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /var/cache/nginx
+      - /var/run
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "2"
