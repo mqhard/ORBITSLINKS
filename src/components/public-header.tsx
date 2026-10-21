@@ -1,14 +1,20 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { homepageContent } from "@/content/homepage";
 import { useSitePreferences } from "@/components/site-preferences";
 import { orbitModules } from "@/content/workspace";
+import { publicNavigation, headerActions, solutionNavigation } from "@/content/navigation";
+import styles from "./public-header.module.css";
 
 export function PublicHeader() {
   const { locale, setLocale, theme, setTheme } = useSitePreferences();
   const content = homepageContent[locale];
   const [menuOpen, setMenuOpen] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const soon = locale === "ar" ? "قريبًا" : "Coming soon";
 
   useEffect(() => {
     document.body.dataset.menuOpen = menuOpen ? "true" : "false";
@@ -17,28 +23,77 @@ export function PublicHeader() {
     };
   }, [menuOpen]);
 
+  useEffect(() => {
+    const desktop = window.matchMedia("(min-width: 1381px)");
+    const onResize = () => { if (desktop.matches) setMenuOpen(false); };
+    desktop.addEventListener("change", onResize);
+    return () => desktop.removeEventListener("change", onResize);
+  }, []);
+
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        if (menuOpen) { setMenuOpen(false); triggerRef.current?.focus(); }
+        headerRef.current?.querySelectorAll<HTMLDetailsElement>("details[open]").forEach(detail => {
+          detail.open = false;
+          detail.querySelector("summary")?.focus();
+        });
+      }
+      if (menuOpen && event.key === "Tab") {
+        const selector = 'a[href], button:not([disabled]), select, summary';
+        const items = [
+          ...Array.from(headerRef.current?.querySelectorAll<HTMLElement>(selector) ?? []),
+          ...Array.from(menuRef.current?.querySelectorAll<HTMLElement>(selector) ?? []),
+        ].filter(el => el.getClientRects().length && getComputedStyle(el).visibility !== "hidden");
+        const index = items.indexOf(document.activeElement as HTMLElement);
+        if (index < 0 || (!event.shiftKey && index === items.length - 1) || (event.shiftKey && index === 0)) {
+          event.preventDefault();
+          items[event.shiftKey ? items.length - 1 : 0]?.focus();
+        }
+      }
+    };
+    const onClick = (event: MouseEvent) => {
+      if (!headerRef.current?.contains(event.target as Node)) {
+        headerRef.current?.querySelectorAll<HTMLDetailsElement>("details[open]").forEach(detail => { detail.open = false; });
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    document.addEventListener("click", onClick);
+    return () => { document.removeEventListener("keydown", onKey); document.removeEventListener("click", onClick); };
+  }, [menuOpen]);
+
+  const accountActions = <>
+    <button className={styles.login} type="button" disabled title={soon}>{headerActions.login.label[locale]}<small>{soon}</small></button>
+    <a className={styles.workspace} href={headerActions.workspace.href} onClick={() => setMenuOpen(false)}>{headerActions.workspace.label[locale]}</a>
+    <a className={`header-cta ${styles.start}`} href={headerActions.start.href} onClick={() => setMenuOpen(false)}>{headerActions.start.label[locale]}<span aria-hidden="true">↗</span></a>
+  </>;
+
   return (
     <>
       <a className="skip-link" href="#main-content">
         {locale === "ar" ? "انتقل إلى المحتوى" : "Skip to content"}
       </a>
-      <header className="site-header">
+      <header className={`site-header ${styles.header}`} ref={headerRef}>
         <a className="wordmark" href="/" aria-label={content.siteName}>
           <span className="wordmark-mark" aria-hidden="true"><i /><i /></span>
           <span>{content.siteName}</span>
         </a>
 
         <nav className="desktop-nav" aria-label={locale === "ar" ? "التنقل الرئيسي" : "Primary navigation"}>
-          <details className="mega-menu" name="primary-navigation"><summary>{locale === "ar" ? "المنصة" : "Platform"} ⌄</summary><div className="mega-panel"><div className="mega-intro"><span>CONNECTED BY DESIGN</span><h2>{locale === "ar" ? "عشرة مدارات. رؤية واحدة." : "Ten orbits. One clear view."}</h2><a href="/workspace/home/">{locale === "ar" ? "استكشف المساحة" : "Explore workspace"} ↗</a></div><div className="mega-links">{orbitModules.map(m => <a href={`/workspace/${m.id}/`} key={m.id}><b>{m.symbol}</b>{m.name[locale]}<span>↗</span></a>)}</div></div></details>
-          <a href="/plans/">{locale === "ar" ? "الخطط" : "Plans"}</a>
-          <details className="mega-menu" name="primary-navigation"><summary>{locale === "ar" ? "الحلول" : "Solutions"} ⌄</summary><div className="mega-panel compact-mega"><a href="/workspace/seo/">{locale === "ar" ? "نمِّ حضورك في البحث" : "Grow search visibility"} ↗</a><a href="/workspace/ai/">{locale === "ar" ? "كن جزءًا من إجابات AI" : "Be part of AI answers"} ↗</a><a href="/workspace/automations/">{locale === "ar" ? "أتمت مسار النمو" : "Automate your growth workflow"} ↗</a><a href="/workspace/content/">{locale === "ar" ? "من الفكرة إلى المحتوى" : "From idea to content"} ↗</a></div></details>
-          <a href="/#resources">{locale === "ar" ? "الموارد" : "Resources"}</a>
-          <a href="/information/enterprise/">{locale === "ar" ? "للمؤسسات" : "Enterprise"} ↗</a>
+          {publicNavigation.map(item => item.pending ? (
+            <button className={styles.pending} type="button" disabled data-target-route={item.href} title={soon} key={item.id}>{item.label[locale]}<small>{soon}</small></button>
+          ) : item.menu ? (
+            <details className="mega-menu" name="primary-navigation" key={item.id}>
+              <summary>{item.label[locale]} <span aria-hidden="true">⌄</span></summary>
+              {item.menu === "platform" ? <div className="mega-panel"><div className="mega-intro"><span>CONNECTED BY DESIGN</span><h2>{locale === "ar" ? "عشرة مدارات. رؤية واحدة." : "Ten orbits. One clear view."}</h2><a href="/workspace/home/">{locale === "ar" ? "استكشف المساحة" : "Explore workspace"} ↗</a></div><div className="mega-links">{orbitModules.map(m => <a href={`/workspace/${m.id}/`} key={m.id}><b>{m.symbol}</b>{m.name[locale]}<span>↗</span></a>)}</div></div>
+                : <div className="mega-panel compact-mega">{solutionNavigation.map(link => <a href={link.href} key={link.href}>{link.label[locale]} ↗</a>)}</div>}
+            </details>
+          ) : <a key={item.id} href={item.href}>{item.label[locale]}</a>)}
         </nav>
 
         <div className="header-controls">
-          <button className="locale-button" type="button" onClick={() => setLocale(locale === "ar" ? "en" : "ar")}>
-            {content.language}
+          <button className="locale-button" type="button" lang={locale === "ar" ? "en" : "ar"} onClick={() => setLocale(locale === "ar" ? "en" : "ar")}>
+            {locale === "ar" ? "English" : "العربية"}
           </button>
           <label className="theme-control">
             <span>{content.themeLabel}</span>
@@ -55,28 +110,23 @@ export function PublicHeader() {
               <option value="dark">{content.themeOptions.dark}</option>
             </select>
           </label>
-          <a className="header-login" href="/workspace/home/">{locale === "ar" ? "مساحة العمل" : "Workspace"}</a>
-          <a className="header-cta" href="/start/">{content.start}<span aria-hidden="true">↗</span></a>
-          <button className="menu-button" type="button" aria-expanded={menuOpen} aria-controls="mobile-menu" onClick={() => setMenuOpen((value) => !value)}>
+          <div className={styles.desktopActions}>{accountActions}</div>
+          <button ref={triggerRef} className="menu-button" type="button" aria-expanded={menuOpen} aria-controls="mobile-menu" onClick={() => setMenuOpen((value) => !value)}>
             <span>{menuOpen ? content.close : content.menu}</span><i aria-hidden="true" />
           </button>
         </div>
       </header>
 
-      <div className={`mobile-menu${menuOpen ? " is-open" : ""}`} id="mobile-menu" aria-hidden={!menuOpen}>
+      <div ref={menuRef} className={`mobile-menu ${styles.mobileMenu}${menuOpen ? " is-open" : ""}`} id="mobile-menu" aria-hidden={!menuOpen} inert={!menuOpen}>
         <nav aria-label={locale === "ar" ? "قائمة الجوال" : "Mobile navigation"}>
-          {content.nav.map((item, index) => (
-            <a key={item.href} href={item.href.startsWith("#") ? `/${item.href}` : item.href} onClick={() => setMenuOpen(false)}>
-              <span>0{index + 1}</span>{item.label}<b aria-hidden="true">↗</b>
-            </a>
-          ))}
-          <a href="/plans/">{locale === "ar" ? "الخطط" : "Plans"} ↗</a>
-          <a href="/workspace/automations/">{locale === "ar" ? "الأتمتة" : "Autopilot"} ↗</a>
+          {publicNavigation.map((item, index) => {
+            const contents = <><span className={styles.number} aria-hidden="true">{String(index + 1).padStart(2, "0")}</span><span className={styles.label}>{item.label[locale]}</span>{item.pending ? <small>{soon}</small> : <b aria-hidden="true">↗</b>}</>;
+            return item.pending
+              ? <button key={item.id} type="button" disabled data-target-route={item.href}>{contents}</button>
+              : <a key={item.id} href={item.href} onClick={() => setMenuOpen(false)}>{contents}</a>;
+          })}
         </nav>
-        <div className="mobile-actions">
-          <a href="/workspace/home/" onClick={() => setMenuOpen(false)}>{locale === "ar" ? "مساحة العمل" : "Workspace"}</a>
-          <a href="/start/" onClick={() => setMenuOpen(false)}>{content.start}</a>
-        </div>
+        <div className={styles.mobileActions}>{accountActions}</div>
       </div>
     </>
   );
