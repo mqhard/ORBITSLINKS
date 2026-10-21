@@ -102,9 +102,9 @@ const ar = {
     metricLabel: "إيقاع اتخاذ القرار في السيناريو",
   },
   resources: {
-    eyebrow: "الموارد • 6 مسارات",
+    eyebrow: "الموارد • 9 مسارات",
     title: "ابقَ أمام الإشارة التالية",
-    note: "المحتوى التالي عناوين تأسيسية وسيتم ربطه بالمحتوى الفعلي لاحقًا.",
+    note: "أدلة عملية قصيرة تربط الفكرة بخطوتك التالية داخل المنصة.",
     items: [
       ["دليل الظهور في إجابات الذكاء الاصطناعي", "دليل", "ابدأ من السؤال، ثم ارسم مصادر الإجابة."],
       ["كيف تقرأ حركة السوق قبل منافسيك", "رؤية", "حوّل تغيّر القنوات إلى فرضيات قابلة للاختبار."],
@@ -112,12 +112,15 @@ const ar = {
       ["من الكلمة إلى منظومة محتوى", "منهج", "ابنِ عناقيد تغطي نية المستخدم كاملة."],
       ["قياس السلطة خارج موقعك", "بحث", "افهم الروابط والذكر والمصادر كمنظومة واحدة."],
       ["لوحة قرار للفريق التنفيذي", "قالب", "اختصر عشرات المؤشرات إلى الأسئلة التي تهم."],
+      ["صمّم مسار نمو يعمل بتناغم", "أتمتة", "اربط الفحص بالأولوية ثم بالتقرير."],
+      ["الحضور المحلي من منظور العميل", "دليل", "اجمع دقة البيانات مع سهولة الاكتشاف."],
+      ["من إشارة اجتماعية إلى خطة نشر", "منهج", "وازن بين إيقاع النشر وقيمة الرسالة."],
     ],
   },
   finalCta: {
     eyebrow: "ابدأ المدار الأول",
     title: "الرؤية تبدأ بسؤال واحد عن موقعك",
-    body: "أدخل نطاقك لنحوّل هذه الواجهة التأسيسية لاحقًا إلى تجربة تحليل حقيقية ومتصلة.",
+    body: "خصص مساحة عملك، استكشف أدواتك، وجرّب مسارات النمو ببيانات محاكاة مترابطة.",
     cta: "ابدأ الاستكشاف",
   },
   footer: {
@@ -163,8 +166,8 @@ const en = {
   data: { eyebrow: "Data and facts", title: "Five layers for the complete picture", note: "These are structural counts for the foundation—not claims about commercial data scale.", items: [["01", "Search signals", "Keywords, pages, rank, and demand."], ["02", "Competition", "Share, channels, gaps, and movement."], ["03", "Artificial intelligence", "Visibility, mentions, context, and sources."], ["04", "Authority", "Links, off-site signals, and trust."], ["05", "Market", "Audiences, regions, and trends."]] },
   index: { eyebrow: "ORBITS INDEX concept", title: "A live visibility index concept", body: "A UI concept for comparing presence across AI answers. Every name and value below is entirely fictional.", rows: [["nova-demo.sa", "92"], ["orbit-lab.ai", "84"], ["signal-demo.co", "73"], ["atlas-sample.io", "61"], ["north-demo.com", "48"]], cta: "Explore the demo index" },
   story: { eyebrow: "Illustrative scenario • not a real customer", title: "From scattered reports to one daily decision", quote: "ORBITS brings the signal, context, and next move into one view. That is how work becomes faster and clearer for the team.", role: "Digital growth lead — fictional persona", metric: "Weekly → daily", metricLabel: "Decision cadence in this scenario" },
-  resources: { eyebrow: "Resources • 6 paths", title: "Stay ahead of the next signal", note: "These are foundation titles and will be connected to real content later.", items: [["A guide to visibility in AI answers", "Guide", "Start with the question, then map the sources behind the answer."], ["Read market movement before competitors", "Insight", "Turn channel shifts into testable hypotheses."], ["Technical site-health checklist", "Tool", "Prioritize issues by their effect on discovery."], ["From keyword to content system", "Method", "Build clusters that cover the complete user intent."], ["Measure authority beyond your site", "Research", "Read links, mentions, and sources as one system."], ["An executive decision dashboard", "Template", "Reduce dozens of metrics to the questions that matter."]] },
-  finalCta: { eyebrow: "Start the first orbit", title: "Visibility starts with one question about your site", body: "Enter your domain so this foundation can evolve into a real, connected analysis experience.", cta: "Start exploring" },
+  resources: { eyebrow: "Resources • 9 paths", title: "Stay ahead of the next signal", note: "Short practical field notes connect an idea to your next action.", items: [["A guide to visibility in AI answers", "Guide", "Start with the question, then map the sources behind the answer."], ["Read market movement before competitors", "Insight", "Turn channel shifts into testable hypotheses."], ["Technical site-health checklist", "Tool", "Prioritize issues by their effect on discovery."], ["From keyword to content system", "Method", "Build clusters that cover the complete user intent."], ["Measure authority beyond your site", "Research", "Read links, mentions, and sources as one system."], ["An executive decision dashboard", "Template", "Reduce dozens of metrics to the questions that matter."], ["Design a connected growth workflow", "Automation", "Connect the audit, the priority and the report."], ["Local presence through your customer's eyes", "Guide", "Connect accurate information with easy discovery."], ["From social signal to publishing plan", "Method", "Balance your publishing rhythm with a useful message."]] },
+  finalCta: { eyebrow: "Start the first orbit", title: "Visibility starts with one question about your site", body: "Personalize your workspace, explore the tools, and try connected workflows with simulated data.", cta: "Start exploring" },
   footer: { summary: "A digital visibility system connecting search, AI, and market intelligence into one decision path.", groups: [["Platform", "ORBITS One", "AI signals", "Site health", "Growth reports"], ["Solutions", "Search visibility", "Market intelligence", "Content", "Digital authority"], ["Resources", "Guides", "Research", "Tools", "Methods"], ["Company", "About ORBITS", "Contact", "Privacy", "Terms"]], copyright: "© 2026 ORBITS LINKS. An evolving foundation release." },
 };
 

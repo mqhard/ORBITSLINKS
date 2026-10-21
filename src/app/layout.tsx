@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { SitePreferencesProvider } from "@/components/site-preferences";
 import "./globals.css";
+import "./workspace.css";
 
 export const metadata: Metadata = {
   title: "ORBITS LINKS — Digital Visibility Intelligence",
@@ -30,7 +31,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ar" dir="rtl" suppressHydrationWarning>
+    <html lang="ar" dir="rtl" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: preferenceBootstrap }} />
       </head>

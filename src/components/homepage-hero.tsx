@@ -3,21 +3,18 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { homepageContent, homepageMarkets } from "@/content/homepage";
 import { useSitePreferences } from "@/components/site-preferences";
-
-function isValidDomain(value: string) {
-  const domain = value.trim().replace(/^https?:\/\//i, "").split("/")[0];
-  return /^(?=.{1,253}$)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}$/i.test(
-    domain,
-  );
-}
+import { useRouter } from "next/navigation";
+import { saveOrbitState, normalizeDomain } from "@/lib/orbit-store";
 
 export function HomepageHero() {
+  const router = useRouter();
   const { locale } = useSitePreferences();
   const content = homepageContent[locale];
   const markets = homepageMarkets[locale];
   const [domain, setDomain] = useState("");
   const [message, setMessage] = useState("");
   const [isInvalid, setIsInvalid] = useState(false);
+  const [market, setMarket] = useState("SA");
 
   useEffect(() => {
     if (isInvalid) {
@@ -29,14 +26,15 @@ export function HomepageHero() {
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!isValidDomain(domain)) {
+    if (!normalizeDomain(domain)) {
       setIsInvalid(true);
       setMessage(content.invalidDomain);
       return;
     }
 
     setIsInvalid(false);
-    setMessage(content.demoNotice);
+    saveOrbitState(s => ({ ...s, profile: { ...s.profile, domain: normalizeDomain(domain), market } }));
+    router.push("/start/");
   }
 
   return (
@@ -74,7 +72,7 @@ export function HomepageHero() {
             </label>
             <label className="field market-field">
               <span>{content.marketLabel}</span>
-              <select defaultValue="SA">
+              <select value={market} onChange={e => setMarket(e.target.value)}>
                 {markets.map((market) => (
                   <option key={market.value} value={market.value}>
                     {market.label}
