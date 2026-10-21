@@ -6,6 +6,7 @@
   --surface: #fffdf7;
   --surface-2: #ebe7dc;
   --ink: #0b1730;
+  --brand-logo-color: var(--ink);
   --muted: #667085;
   --line: #d9d5ca;
   --navy: #06152f;
@@ -27,6 +28,7 @@
   --surface: #0d1c35;
   --surface-2: #142542;
   --ink: #f9f5e9;
+  --brand-logo-color: var(--lime);
   --muted: #aeb8c9;
   --line: #263a58;
   --navy: #020a17;
@@ -69,10 +71,6 @@ button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible
 }
 
 .wordmark, .footer-brand { display: inline-flex; align-items: center; gap: 0.75rem; font-family: var(--font-latin); font-size: 0.86rem; font-weight: 900; letter-spacing: 0.14em; text-decoration: none; }
-.wordmark-mark { position: relative; display: inline-block; width: 2.2rem; aspect-ratio: 1; border: 1px solid var(--indigo); border-radius: 50%; }
-.wordmark-mark::before, .wordmark-mark::after { content: ""; position: absolute; border: 1px solid var(--indigo); border-radius: 50%; }
-.wordmark-mark::before { inset: 0.4rem -0.25rem; transform: rotate(35deg); }
-.wordmark-mark::after { width: 0.35rem; aspect-ratio: 1; inset-block-start: 0.14rem; inset-inline-end: 0.25rem; background: var(--lime); border: 0; box-shadow: 0 0 0.7rem var(--lime); }
 
 .desktop-nav { display: flex; align-items: center; gap: 2rem; }
 .desktop-nav a { position: relative; color: var(--muted); font-size: 0.88rem; font-weight: 700; text-decoration: none; }
@@ -259,7 +257,7 @@ html[dir="rtl"] .solution-card.is-open .solution-detail { padding: 0 5.5rem 2.2r
 .final-orbit i:nth-child(2) { inset: auto auto 8% 32%; }
 .final-orbit i:nth-child(3) { inset: 45% auto auto 29%; background: var(--lime); }
 
-.site-footer { background: var(--navy); color: var(--ivory); padding: 5rem max(1.5rem, calc((100vw - var(--content)) / 2)) 2rem; }
+.site-footer { --brand-logo-color: var(--lime); background: var(--navy); color: var(--ivory); padding: 5rem max(1.5rem, calc((100vw - var(--content)) / 2)) 2rem; }
 .footer-top { display: grid; grid-template-columns: 1fr 1fr; align-items: end; gap: 2rem; padding-block-end: 4rem; border-block-end: 1px solid rgb(255 255 255 / 15%); }
 .footer-brand { font-size: clamp(1.3rem, 2vw, 2rem); }
 .footer-top > p { max-width: 34rem; margin: 0; color: #b5c1d3; line-height: 1.8; }
@@ -307,7 +305,6 @@ html[dir="rtl"] .marquee > div { animation-direction: reverse; }
 @media (max-width: 760px) {
   .site-header { min-height: 4.5rem; padding-inline: 1rem; }
   .wordmark { font-size: 0.68rem; }
-  .wordmark-mark { width: 1.85rem; }
   .theme-control { display: none; }
   .header-controls { gap: 0.25rem; }
   .locale-button { font-size: 0.72rem; }

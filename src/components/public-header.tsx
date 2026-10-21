@@ -1,5 +1,7 @@
 "use client";
 
+import { BrandLogo } from "@/components/brand-logo";
+
 import { useEffect, useRef, useState } from "react";
 import { homepageContent } from "@/content/homepage";
 import { useSitePreferences } from "@/components/site-preferences";
@@ -75,7 +77,7 @@ export function PublicHeader() {
       </a>
       <header className={`site-header ${styles.header}`} ref={headerRef}>
         <a className="wordmark" href="/" aria-label={content.siteName}>
-          <span className="wordmark-mark" aria-hidden="true"><i /><i /></span>
+          <BrandLogo />
           <span>{content.siteName}</span>
         </a>
 

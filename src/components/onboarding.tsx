@@ -1,4 +1,6 @@
 "use client";
+
+import { BrandLogo } from "@/components/brand-logo";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -23,7 +25,7 @@ export function Onboarding({ plansOnly = false }: { plansOnly?: boolean }) {
   function finish() { update(s => ({ ...s, profile: { ...s.profile, plan } })); router.push("/workspace/home/"); }
   const canContinue = step === 1 ? state.profile.role >= 0 : step === 2 ? state.profile.experience >= 0 : step === 3 ? state.profile.goals.length > 0 : true;
   return <main className="onboarding-shell">
-    <header className="journey-header"><Link href="/" className="wordmark"><span className="wordmark-mark" />ORBITS LINKS</Link><button className="locale-button" onClick={() => setLocale(ar ? "en" : "ar")}>{ar ? "English" : "العربية"}</button><Link href="/workspace/home/">{ar ? "استكشف المساحة ↗" : "Explore workspace ↗"}</Link></header>
+    <header className="journey-header"><Link href="/" className="wordmark"><BrandLogo />ORBITS LINKS</Link><button className="locale-button" onClick={() => setLocale(ar ? "en" : "ar")}>{ar ? "English" : "العربية"}</button><Link href="/workspace/home/">{ar ? "استكشف المساحة ↗" : "Explore workspace ↗"}</Link></header>
     <div className="journey-grid"><section className="journey-form" aria-labelledby="journey-title">
       <div className="journey-progress" aria-label={ar ? `الخطوة ${step + 1} من 5` : `Step ${step + 1} of 5`}>{titles.map((title, i) => <span className={i <= step ? "done" : ""} key={title} />)}<small>0{step + 1} / 05</small></div>
       <p className="section-eyebrow">YOUR NEXT ORBIT</p><h1 id="journey-title">{titles[step]}</h1><p className="journey-description">{subtitles[step]}</p>

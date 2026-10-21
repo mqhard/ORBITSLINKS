@@ -3,8 +3,9 @@
 import { useEffect, useRef, useState, type CSSProperties, type FormEvent, type PointerEvent } from "react";
 import { existingFoundations, formationStages, visibilityCapabilities as capabilities } from "@/content/visibility";
 import s from "./visibility.module.css";
+import { BrandLogo } from "@/components/brand-logo";
 
-const logo = "/brand/orbits-approved-color.png";
+
 const relationPairs = capabilities.flatMap((item, index) =>
   item.connects.flatMap((id) => {
     const target = capabilities.findIndex((candidate) => candidate.id === id);
@@ -160,7 +161,7 @@ export function VisibilityExperience() {
     <div className={s.experience} lang="en" dir="ltr">
       <a className={s.skip} href="#visibility-main">Skip to content</a>
       <header className={s.header} onKeyDown={(event) => { if (event.key === "Escape") setMenuOpen(false); }}>
-        <a href="#visibility-top" className={s.brand} aria-label="ORBITS LINKS — back to top"><img src={logo} width="48" height="48" alt="" /><span>ORBITS<span className={s.brandLight}> LINKS</span></span></a>
+        <a href="#visibility-top" className={s.brand} aria-label="ORBITS LINKS — back to top"><BrandLogo className={s.symbol} /><span>ORBITS<span className={s.brandLight}> LINKS</span></span></a>
         <nav className={s.desktopNav} aria-label="Visibility navigation"><a href="#connections">The connections</a><a href="#practice">In practice</a><a href="#approach">Our approach</a></nav>
         <a href="#starting-point" className={s.headerCta}>Start with your need <Arrow diagonal /></a>
         <button className={s.menuButton} aria-expanded={menuOpen} aria-controls="visibility-menu" onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? "Close −" : "Menu +"}</button>
@@ -189,7 +190,7 @@ export function VisibilityExperience() {
                 {capabilities.map((item) => <line className={s.spoke} key={item.id} x1="50" y1="49" x2={item.x} y2={item.y} />)}
                 {relationPairs.map(([a, b]) => <line key={`${a}-${b}`} className={`${s.link} ${[capabilities[a].id, capabilities[b].id].includes(activeId as typeof capabilities[number]["id"]) ? s.highlight : ""}`} x1={capabilities[a].x} y1={capabilities[a].y} x2={capabilities[b].x} y2={capabilities[b].y} />)}
               </svg>
-              <div className={s.core}><img src={logo} width="190" height="190" alt="Approved ORBITS LINKS radial symbol" /><span>Your existing<br /><strong>world.</strong></span></div>
+              <div className={s.core}><BrandLogo className={s.symbol} label="ORBITS LINKS" /><span>Your existing<br /><strong>world.</strong></span></div>
               <div className={s.nodes} role="group" aria-label="Explore connected capabilities">{capabilities.map((item, index) =>
                 <button key={item.id} className={`${s.node} ${activeId === item.id ? s.selectedNode : ""}`} style={{ "--x": `${item.x}%`, "--y": `${item.y}%`, "--node-index": index } as CSSProperties} aria-pressed={activeId === item.id} aria-controls="capability-detail" onClick={() => selectCapability(item.id)}><i /><span>{item.name}</span><small>0{index + 1}</small></button>,
               )}</div>
@@ -232,7 +233,7 @@ export function VisibilityExperience() {
         </section>
 
         <section className={s.approach} id="approach" aria-labelledby="approach-title">
-          <div className={s.approachIntro}><p className={s.eyebrow}>03 / A THOUGHTFUL WAY FORWARD</p><h2 id="approach-title">Begin with what’s here.<br /><em>Build what comes next.</em></h2><p>The starting point shapes the scope. The scope shapes the sequence. Timing is agreed once we understand both.</p><img src={logo} width="100" height="100" alt="" loading="lazy" /></div>
+          <div className={s.approachIntro}><p className={s.eyebrow}>03 / A THOUGHTFUL WAY FORWARD</p><h2 id="approach-title">Begin with what’s here.<br /><em>Build what comes next.</em></h2><p>The starting point shapes the scope. The scope shapes the sequence. Timing is agreed once we understand both.</p><BrandLogo className={s.symbol} /></div>
           <ol className={s.process}>{[
             ["Understand", "Listen before adding.", "Clarify the need, the audience and the knowledge, people and tools already in place."],
             ["Connect", "Find the useful relationships.", "Map relevant capabilities and dependencies. Decide what deserves attention first."],
@@ -257,7 +258,7 @@ export function VisibilityExperience() {
         </section>
       </main>
 
-      <footer className={s.footer}><div><a href="#visibility-top" className={s.brand}><img src={logo} width="48" height="48" alt="" /><span>ORBITS LINKS</span></a><p>Worlds of Knowledge and Capabilities.</p></div><div><span>VISIBILITY / EXPERIENCE PROTOTYPE</span><a href="/">Return to the existing site <Arrow diagonal /></a><a href="#visibility-top">Back to the beginning ↑</a></div><p className={s.footerStatement}>What you have<br />is <em>the center.</em></p></footer>
+      <footer className={s.footer}><div><a href="#visibility-top" className={s.brand}><BrandLogo className={s.symbol} /><span>ORBITS LINKS</span></a><p>Worlds of Knowledge and Capabilities.</p></div><div><span>VISIBILITY / EXPERIENCE PROTOTYPE</span><a href="/">Return to the existing site <Arrow diagonal /></a><a href="#visibility-top">Back to the beginning ↑</a></div><p className={s.footerStatement}>What you have<br />is <em>the center.</em></p></footer>
     </div>
   );
 }

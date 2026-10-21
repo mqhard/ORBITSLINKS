@@ -1,5 +1,7 @@
 "use client";
 
+import { BrandLogo } from "@/components/brand-logo";
+
 import { homepageContent } from "@/content/homepage";
 import { useSitePreferences } from "@/components/site-preferences";
 
@@ -11,7 +13,7 @@ export function SiteFooter() {
   return (
     <footer className="site-footer">
       <div className="footer-top">
-        <a className="footer-brand" href="#top"><span className="wordmark-mark"><i /><i /></span>ORBITS LINKS</a>
+        <a className="footer-brand" href="#top"><BrandLogo />ORBITS LINKS</a>
         <p>{content.footer.summary}</p>
       </div>
       <div className="footer-groups">
