@@ -9,7 +9,9 @@ import { orbitModules } from "@/content/workspace";
 import { publicNavigation, headerActions, solutionNavigation } from "@/content/navigation";
 import styles from "./public-header.module.css";
 
-export function PublicHeader() {
+// Presentation state only. Pass a verified session here when the auth service is connected.
+// This flag controls navigation and must never be used as an authorization boundary.
+export function PublicHeader({ authenticated = false }: { authenticated?: boolean }) {
   const { locale, setLocale, theme, setTheme } = useSitePreferences();
   const content = homepageContent[locale];
   const [menuOpen, setMenuOpen] = useState(false);
@@ -65,9 +67,8 @@ export function PublicHeader() {
   }, [menuOpen]);
 
   const accountActions = <>
-    <button className={styles.login} type="button" disabled title={soon}>{headerActions.login.label[locale]}<small>{soon}</small></button>
-    <a className={styles.workspace} href={headerActions.workspace.href} onClick={() => setMenuOpen(false)}>{headerActions.workspace.label[locale]}</a>
-    <a className={`header-cta ${styles.start}`} href={headerActions.start.href} onClick={() => setMenuOpen(false)}>{headerActions.start.label[locale]}<span aria-hidden="true">↗</span></a>
+    <a className={styles.workspace} href={authenticated ? headerActions.workspace.href : headerActions.login.href} onClick={() => setMenuOpen(false)}>{authenticated ? headerActions.workspace.label[locale] : headerActions.login.label[locale]}</a>
+    {!authenticated && <a className={`header-cta ${styles.start}`} href={headerActions.start.href} onClick={() => setMenuOpen(false)}>{headerActions.start.label[locale]}<span aria-hidden="true">↗</span></a>}
   </>;
 
   return (
@@ -113,8 +114,8 @@ export function PublicHeader() {
             </select>
           </label>
           <div className={styles.desktopActions}>{accountActions}</div>
-          <button ref={triggerRef} className="menu-button" type="button" aria-expanded={menuOpen} aria-controls="mobile-menu" onClick={() => setMenuOpen((value) => !value)}>
-            <span>{menuOpen ? content.close : content.menu}</span><i aria-hidden="true" />
+          <button ref={triggerRef} className="menu-button" type="button" aria-label={menuOpen ? content.close : content.menu} aria-expanded={menuOpen} aria-controls="mobile-menu" onClick={() => setMenuOpen((value) => !value)}>
+            <i aria-hidden="true" />
           </button>
         </div>
       </header>

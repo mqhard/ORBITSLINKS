@@ -1,0 +1,47 @@
+.page { padding: clamp(1.25rem, 4vw, 4rem) max(1rem, calc((100vw - 76rem) / 2)); min-height: calc(100svh - 5rem); }
+.layout { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+.card { min-width: 0; padding: clamp(1.5rem, 4vw, 3.5rem); }
+.eyebrow { margin: 0; font-size: .7rem; font-weight: 800; letter-spacing: .1em; color: var(--indigo); }
+.formHeading h1 { margin: .75rem 0; font-size: clamp(2rem, 3.4vw, 3rem); line-height: 1.35; letter-spacing: -.04em; }
+.formHeading > p:last-child { margin: 0; color: var(--muted); font-size: .9rem; line-height: 1.9; }
+.modeSwitch { display: grid; grid-template-columns: 1fr 1fr; gap: .3rem; margin-top: 1.75rem; padding: .3rem; border: 1px solid var(--line); border-radius: .9rem; background: var(--surface-2); }
+.modeSwitch a { display: grid; place-items: center; min-height: 46px; padding: .6rem .5rem; border-radius: .65rem; color: var(--muted); text-align: center; text-decoration: none; font-size: .85rem; font-weight: 700; }
+.modeSwitch a[aria-current="page"] { color: var(--ink); background: var(--surface); box-shadow: 0 1px 5px rgb(0 0 0 / 7%); }
+.notice { margin: 1.25rem 0; padding: .85rem 1rem; border-inline-start: 3px solid var(--indigo); border-radius: .3rem; background: var(--surface-2); color: var(--muted); font-size: .78rem; line-height: 1.85; }
+.form { display: grid; gap: 1.15rem; }
+.field { display: grid; gap: .5rem; min-width: 0; }
+.field label { font-size: .82rem; font-weight: 700; }
+.field input { width: 100%; min-width: 0; min-height: 50px; border: 1px solid var(--line); border-radius: .7rem; padding: .8rem 1rem; background: var(--page); color: var(--ink); font-size: 1rem; }
+.field input::placeholder { color: var(--muted); }
+.passwordField { position: relative; }
+.passwordField input { padding-right: 4.5rem; }
+.passwordField button { position: absolute; right: .35rem; top: .2rem; bottom: .2rem; min-width: 3.6rem; border: 0; border-radius: .5rem; background: none; color: var(--muted); font-size: .75rem; }
+.card .submit { width: 100%; justify-content: space-between; min-height: 52px; margin-top: .3rem; border-radius: .7rem; font-size: .9rem; }
+.card .submit:disabled { cursor: not-allowed; opacity: .6; transform: none; }
+.switchPrompt { margin: 1.5rem 0 0; text-align: center; font-size: .82rem; line-height: 1.9; color: var(--muted); }
+.switchPrompt a { color: var(--ink); font-weight: 700; text-underline-offset: 4px; }
+.legal { display: flex; justify-content: center; flex-wrap: wrap; gap: .75rem; margin-top: 1rem; color: var(--muted); font-size: .72rem; }
+.legal a { text-underline-offset: 4px; }
+.intro { display: flex; flex-direction: column; align-items: flex-start; padding: clamp(2rem, 4vw, 3.5rem); background: #071326; color: #f9f5e9; }
+.intro .brandSymbol { width: 7rem; color: var(--lime); margin-bottom: 2.5rem; }
+.intro .eyebrow { color: var(--lime); }
+.intro h2 { margin: 1.25rem 0; white-space: pre-line; font-size: clamp(2rem, 3.5vw, 3.2rem); line-height: 1.45; letter-spacing: -.03em; }
+.intro > p:not(.eyebrow) { margin: 0; font-size: .9rem; line-height: 1.9; color: #aeb8c9; }
+.intro ul { display: grid; gap: 1.1rem; padding: 1.75rem 0; margin: 1.75rem 0 2rem; border-top: 1px solid #263a58; list-style: none; font-size: .83rem; line-height: 1.6; }
+.intro li { display: flex; align-items: baseline; gap: .65rem; }
+.intro li::before { content: "↗"; color: var(--lime); }
+.signature { margin-top: auto; font: 800 .8rem var(--font-latin); letter-spacing: .16em; }
+.back { display: flex; width: fit-content; align-items: center; gap: .6rem; margin: 1.5rem auto 0; padding: .5rem; color: var(--muted); text-decoration: none; font-size: .82rem; }
+@media (max-width: 760px) {
+  .page { padding: 1rem 1rem 2rem; min-height: calc(100svh - 4.5rem); }
+  .layout { grid-template-columns: minmax(0, 1fr); border-radius: 1.25rem; }
+  .card { padding: 1.4rem; }
+  .intro { display: none; }
+  .formHeading h1 { font-size: 2rem; }
+  .modeSwitch { margin-top: 1.4rem; }
+}
+@media (max-width: 360px) {
+  .page { padding-inline: .65rem; }
+  .card { padding: 1rem; }
+  .modeSwitch a { font-size: .78rem; }
+}

@@ -20,9 +20,9 @@ export const publicNavigation: NavigationItem[] = [
 ];
 
 export const headerActions = {
-  login: { label: { ar: "تسجيل الدخول", en: "Login" }, href: null },
+  login: { label: { ar: "تسجيل الدخول", en: "Login" }, href: "/auth/?mode=login" },
   workspace: { label: { ar: "مساحة العمل", en: "Workspace" }, href: "/workspace/home/" },
-  start: { label: { ar: "ابدأ مجاناً", en: "Start Free" }, href: "/start/" },
+  start: { label: { ar: "ابدأ مجاناً", en: "Start Free" }, href: "/auth/?mode=signup" },
 } as const;
 
 export const solutionNavigation = [
