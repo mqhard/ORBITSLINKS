@@ -1,7 +1,5 @@
 "use client";
 
-import { BrandLogo } from "@/components/brand-logo";
-
 import { useCallback, useEffect, useRef, useState } from "react";
 import { OrbitsMenu } from "./orbits-menu";
 import { homepageContent } from "@/content/homepage";
@@ -86,10 +84,12 @@ export function PublicHeader({ authenticated = false }: { authenticated?: boolea
         {locale === "ar" ? "انتقل إلى المحتوى" : "Skip to content"}
       </a>
       <header className={`site-header ${styles.header}`} ref={headerRef}>
-        <a className="wordmark" href="/" aria-label={content.siteName}>
-          <BrandLogo />
-          <span>{content.siteName}</span>
-        </a>
+        <div className={styles.brand}>
+          <OrbitsMenu open={openPanel === "account"} onOpenChange={setAccountOpen} authenticated={authenticated} />
+          <a className="wordmark" href="/" aria-label={locale === "ar" ? `${content.siteName} — الصفحة الرئيسية` : `${content.siteName} — Home`} onClick={() => setOpenPanel(null)}>
+            <span>{content.siteName}</span>
+          </a>
+        </div>
 
         <nav className="desktop-nav" aria-label={locale === "ar" ? "التنقل الرئيسي" : "Primary navigation"}>
           {publicNavigation.map(item => item.pending ? (
@@ -108,7 +108,6 @@ export function PublicHeader({ authenticated = false }: { authenticated?: boolea
           <button ref={triggerRef} className="menu-button" type="button" aria-label={menuOpen ? content.close : content.menu} aria-expanded={menuOpen} aria-controls="mobile-menu" onClick={() => setMenuOpen(!menuOpen)}>
             <i aria-hidden="true" />
           </button>
-          <OrbitsMenu open={openPanel === "account"} onOpenChange={setAccountOpen} authenticated={authenticated} />
         </div>
       </header>
 
