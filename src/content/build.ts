@@ -1,0 +1,58 @@
+export type Text = { ar: string; en: string };
+export const t = (ar: string, en: string): Text => ({ ar, en });
+export const categories = {
+  foundation: t('الأساس', 'Foundation'), brand: t('العلامة', 'Brand'), digital: t('التجربة الرقمية', 'Digital experience'),
+  sales: t('أنظمة العملاء والمبيعات', 'Sales & customer systems'), automation: t('الأتمتة والذكاء الاصطناعي', 'Automation & AI'),
+  applications: t('تطبيقات الهوية', 'Brand applications'), content: t('أساس المحتوى', 'Content foundation'), launch: t('الإطلاق', 'Launch'),
+};
+export type Category = keyof typeof categories;
+export type Capability = { id: string; category: Category; name: Text; objective: Text; output: Text; dependencies: string[]; system?: Text; approval?: boolean };
+export const capabilities: Capability[] = [
+  { id: 'market', category: 'foundation', name: t('السوق والجمهور', 'Market & audience'), objective: t('حدد السوق والجمهور والمنافسين وسياق العمل.', 'Define the market, audience, competitors and business context.'), output: t('موجز السوق والجمهور', 'Market & audience brief'), dependencies: [] },
+  { id: 'positioning', category: 'foundation', name: t('التموضع', 'Positioning'), objective: t('وضح القيمة والتميّز ونموذج العمل.', 'Clarify value, differentiation and the business model.'), output: t('وثيقة التموضع', 'Positioning document'), dependencies: ['market'] },
+  { id: 'strategy', category: 'brand', name: t('استراتيجية العلامة ورسائلها', 'Brand strategy & messaging'), objective: t('حدد الوعد والشخصية والرسائل الأساسية.', 'Define the promise, personality and core messages.'), output: t('استراتيجية العلامة والرسائل', 'Brand strategy & messaging'), dependencies: ['positioning'], approval: true },
+  { id: 'naming', category: 'brand', name: t('تسمية المشروع', 'Naming'), objective: t('اختر اسمًا عند الحاجة وراجع ملاءمته.', 'Choose and review a name when needed.'), output: t('مقترح الاسم', 'Naming proposal'), dependencies: ['strategy'], approval: true },
+  { id: 'identity', category: 'brand', name: t('الهوية البصرية', 'Visual identity'), objective: t('ابن الشعار ونظام الألوان والطباعة والاستخدام.', 'Develop the logo, color, typography and usage system.'), output: t('ملفات الشعار ودليل الهوية', 'Logo files & brand guidelines'), dependencies: ['strategy'], approval: true },
+  { id: 'website', category: 'digital', name: t('الموقع والتجربة الرقمية', 'Website & digital experience'), objective: t('تجربة متجاوبة تشمل UX وبنية المعلومات وصفحات الهبوط ورحلة العميل.', 'Responsive UX, information architecture, landing pages and the customer journey.'), output: t('الموقع وتصميم التجربة', 'Website & experience design'), dependencies: ['identity', 'strategy', 'content'], system: t('الموقع', 'Website'), approval: true },
+  { id: 'search', category: 'digital', name: t('الجاهزية للبحث', 'Search readiness'), objective: t('أساس SEO تقني وبنية محتوى واضحة وقابلة للفهرسة.', 'Technical SEO foundations and clear, indexable content.'), output: t('قائمة جاهزية البحث', 'Search readiness checklist'), dependencies: ['website'] },
+  { id: 'ai-discovery', category: 'digital', name: t('جاهزية الاكتشاف بالذكاء الاصطناعي', 'AI discoverability readiness'), objective: t('محتوى موثوق ومنظم وتعريف واضح بالكيان دون ضمانات ترتيب.', 'Reliable, structured content and clear entity information, without ranking guarantees.'), output: t('مراجعة بنية المحتوى والكيان', 'Content & entity structure review'), dependencies: ['website', 'content'] },
+  { id: 'forms', category: 'sales', name: t('النماذج وجمع العملاء المحتملين', 'Forms & lead capture'), objective: t('اجمع الطلبات المناسبة وحدد الموافقة ومسار المتابعة.', 'Capture relevant enquiries and define consent and follow-up.'), output: t('النماذج ومسار جمع الطلبات', 'Forms & lead capture flow'), dependencies: ['website'], system: t('النماذج', 'Forms') },
+  { id: 'crm', category: 'sales', name: t('إدارة العملاء CRM', 'CRM & pipeline'), objective: t('نظّم العملاء ومراحل البيع والمسؤوليات.', 'Organize contacts, pipeline stages and ownership.'), output: t('إعداد CRM ومخطط المبيعات', 'CRM setup & pipeline'), dependencies: ['forms'], system: t('إدارة العملاء', 'CRM'), approval: true },
+  { id: 'support', category: 'sales', name: t('دعم العملاء', 'Customer support'), objective: t('حدد قنوات الدعم وآلية إسناد الطلبات.', 'Define support channels and request ownership.'), output: t('إعداد دعم العملاء', 'Customer support setup'), dependencies: ['crm'], system: t('دعم العملاء', 'Customer support') },
+  { id: 'automation', category: 'automation', name: t('سير العمل الآلي', 'Automated workflows'), objective: t('صِل الطلبات بالإشعارات والمتابعة وفق قواعد عمل واضحة.', 'Connect enquiries, notifications and follow-up through clear business rules.'), output: t('توثيق الأتمتة وقواعد العمل', 'Automation & business rules documentation'), dependencies: ['crm', 'forms', 'email'], system: t('الأتمتة', 'Automation') },
+  { id: 'agent', category: 'automation', name: t('وكيل ذكاء اصطناعي', 'AI agent'), objective: t('حدد المهام ومصادر المعرفة وحدود التصعيد للفريق.', 'Define tasks, knowledge sources and escalation to the team.'), output: t('مواصفات الوكيل ومصادر المعرفة', 'Agent specification & knowledge sources'), dependencies: ['content', 'support'], system: t('وكلاء الذكاء الاصطناعي', 'AI agents') },
+  { id: 'reporting', category: 'automation', name: t('أساس التقارير', 'Reporting foundations'), objective: t('حدد المؤشرات ومصادرها ومسؤولية متابعتها.', 'Define metrics, their sources and reporting ownership.'), output: t('خطة القياس والتقارير', 'Measurement & reporting plan'), dependencies: ['analytics'] },
+  { id: 'profile', category: 'applications', name: t('الملف التعريفي للشركة', 'Company profile'), objective: t('قدم الشركة وقدراتها بصورة واضحة ومتسقة.', 'Present the company and its capabilities consistently.'), output: t('الملف التعريفي', 'Company profile'), dependencies: ['identity', 'strategy'], approval: true },
+  { id: 'deck', category: 'applications', name: t('العرض الاستثماري', 'Pitch deck'), objective: t('صغ قصة المشروع والفرصة والنموذج والعرض.', 'Present the story, opportunity, business model and proposal.'), output: t('العرض الاستثماري', 'Pitch deck'), dependencies: ['strategy', 'identity'], approval: true },
+  { id: 'templates', category: 'applications', name: t('القوالب وتطبيقات الهوية', 'Templates & stationery'), objective: t('قوالب العروض والمقترحات والتوقيع البريدي والمطبوعات.', 'Presentation, proposal, email signature and stationery templates.'), output: t('حزمة قوالب الهوية', 'Brand template pack'), dependencies: ['identity'] },
+  { id: 'content', category: 'content', name: t('استراتيجية وأساس المحتوى', 'Content foundation'), objective: t('حدد ركائز المحتوى وبنيته ونبرة الكتابة.', 'Define content pillars, structure and tone of voice.'), output: t('استراتيجية المحتوى وبنيته', 'Content strategy & structure'), dependencies: ['strategy'], approval: true },
+  { id: 'social', category: 'content', name: t('أساس الحضور الاجتماعي', 'Social foundation'), objective: t('هيئ الحسابات وركائز النشر وقوالب الإطلاق.', 'Prepare channels, publishing pillars and launch templates.'), output: t('هيكل الحسابات وقوالب التواصل', 'Social structure & templates'), dependencies: ['identity', 'content'] },
+  { id: 'launch-content', category: 'content', name: t('محتوى الإطلاق', 'Launch content'), objective: t('جهّز الرسائل والأصول اللازمة ليوم الإطلاق.', 'Prepare messages and assets for launch day.'), output: t('حزمة محتوى الإطلاق', 'Launch content pack'), dependencies: ['content'] },
+  { id: 'domain', category: 'launch', name: t('جاهزية النطاق', 'Domain readiness'), objective: t('حدد ملكية النطاق وإعداداته وشهادة الأمان.', 'Establish domain ownership, configuration and TLS readiness.'), output: t('سجل جاهزية النطاق', 'Domain readiness record'), dependencies: [], system: t('النطاق', 'Domain') },
+  { id: 'email', category: 'launch', name: t('البريد التشغيلي', 'Operational email'), objective: t('جهّز البريد ومسؤولية المتابعة والتسليم.', 'Prepare email, follow-up ownership and delivery.'), output: t('إعداد البريد', 'Email setup'), dependencies: ['domain'], system: t('البريد الإلكتروني', 'Email') },
+  { id: 'analytics', category: 'launch', name: t('التحليلات وتتبع التحويل', 'Analytics & conversion tracking'), objective: t('حدد الأحداث والتحويلات وقواعد الموافقة على التتبع.', 'Define events, conversions and tracking consent.'), output: t('خطة التحليلات والتتبع', 'Analytics & tracking plan'), dependencies: ['website'], system: t('التحليلات', 'Analytics') },
+  { id: 'integrations', category: 'launch', name: t('التكاملات', 'Integrations'), objective: t('راجع نقاط الربط ونقل البيانات ومسؤولية التشغيل.', 'Review connections, data transfer and operational ownership.'), output: t('خريطة التكاملات', 'Integration map'), dependencies: ['website', 'crm'] },
+  { id: 'qa', category: 'launch', name: t('الجودة وجاهزية الإطلاق', 'QA & launch readiness'), objective: t('راجع مخرجات النطاق المتفق عليه واعتمد التسليم.', 'Review agreed scope and approve the handover.'), output: t('سجل مراجعة الإطلاق', 'Launch review record'), dependencies: [], approval: true },
+  { id: 'custom', category: 'foundation', name: t('احتياج مخصص', 'Custom scope'), objective: t('حدد المخرج ومعيار القبول في وصف مشروعك قبل بدء التنفيذ.', 'Define the deliverable and acceptance criteria in your brief before execution.'), output: t('المخرج المتفق عليه', 'Agreed deliverable'), dependencies: [], approval: true },
+];
+export const tracks = {
+  new: t('ابدأ مشروعًا جديدًا', 'Start a new business'),
+  gaps: t('ابنِ ما ينقص مشروعك', 'Build what’s missing'),
+  specific: t('ابنِ شيئًا محددًا', 'Build something specific'),
+};
+export const focuses = [
+  { id: 'brand', name: t('العلامة', 'Brand'), ids: ['strategy', 'identity'] },
+  { id: 'website', name: t('الموقع', 'Website'), ids: ['website', 'search', 'ai-discovery', 'forms', 'domain', 'analytics'] },
+  { id: 'crm', name: t('إدارة العملاء', 'CRM'), ids: ['crm'] },
+  { id: 'automation', name: t('الأتمتة', 'Automation'), ids: ['automation'] },
+  { id: 'profile', name: t('الملف التعريفي', 'Company profile'), ids: ['profile'] },
+  { id: 'content', name: t('أساس المحتوى', 'Content foundation'), ids: ['content', 'social', 'launch-content'] },
+  { id: 'agent', name: t('وكيل ذكاء اصطناعي', 'AI agent'), ids: ['agent'] },
+  { id: 'other', name: t('احتياج آخر', 'Other'), ids: ['custom'] },
+];
+export const assessmentLabels = { ready: t('جاهز', 'Ready'), needs: t('يحتاج تحسينًا', 'Needs improvement'), missing: t('غير موجود', 'Missing'), optional: t('اختياري', 'Optional'), unnecessary: t('غير مطلوب', 'Not required') };
+export const stateLabels = { existing: t('موجود وجاهز', 'Existing / ready'), complete: t('مكتمل', 'Complete'), progress: t('قيد التنفيذ', 'In progress'), waiting: t('بانتظار مدخلات', 'Waiting'), todo: t('لم يبدأ', 'Not started'), postponed: t('مؤجل', 'Postponed'), removed: t('مستبعد', 'Removed'), optional: t('اختياري', 'Optional') };
+export const approvalLabels = { waiting: t('بانتظار المراجعة', 'Waiting for review'), approved: t('معتمد', 'Approved'), changes: t('تعديلات مطلوبة', 'Changes requested') };
+export const projectLabels = { draft: t('مسودة', 'Draft'), active: t('نشط', 'Active'), completed: t('مكتمل', 'Completed') };
+export const steps = [t('البداية', 'Start'), t('اكتشاف الاحتياج', 'Discovery'), t('التقييم', 'Assessment'), t('المخطط', 'Blueprint')];
+export const tabs = { overview: t('نظرة عامة', 'Overview'), blueprint: t('المخطط', 'Blueprint'), workstreams: t('مسارات العمل', 'Workstreams'), deliverables: t('المخرجات', 'Deliverables'), systems: t('الأنظمة', 'Systems'), team: t('الفريق', 'Team'), approvals: t('الموافقات', 'Approvals'), launch: t('جاهزية الإطلاق', 'Launch readiness') };
