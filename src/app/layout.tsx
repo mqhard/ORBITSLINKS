@@ -1,7 +1,22 @@
 import type { Metadata } from "next";
+import localFont from "next/font/local";
 import { SitePreferencesProvider } from "@/components/site-preferences";
 import "./globals.css";
 import "./workspace.css";
+
+const arabicFont = localFont({
+  src: [
+    { path: "./fonts/TheYearofHandicrafts-Regular.otf", weight: "400", style: "normal" },
+    { path: "./fonts/TheYearofHandicrafts-Medium.otf", weight: "500", style: "normal" },
+    { path: "./fonts/TheYearofHandicrafts-SemiBold.otf", weight: "600", style: "normal" },
+    { path: "./fonts/TheYearofHandicrafts-Bold.otf", weight: "700", style: "normal" },
+    { path: "./fonts/TheYearofHandicrafts-Black.otf", weight: "900", style: "normal" },
+  ],
+  variable: "--font-orbits-arabic",
+  display: "swap",
+  preload: false,
+  adjustFontFallback: false,
+});
 
 export const metadata: Metadata = {
   title: "ORBITS LINKS — Digital Visibility Intelligence",
@@ -31,7 +46,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ar" dir="rtl" data-scroll-behavior="smooth" suppressHydrationWarning>
+    <html className={arabicFont.variable} lang="ar" dir="rtl" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: preferenceBootstrap }} />
       </head>

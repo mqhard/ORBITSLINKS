@@ -1,7 +1,7 @@
 :root {
   color-scheme: light;
   --font-latin: "Avenir Next", Avenir, Inter, Arial, sans-serif;
-  --font-arabic: "Geeza Pro", "Noto Sans Arabic", Tahoma, sans-serif;
+  --font-arabic: var(--font-orbits-arabic), "Geeza Pro", "Noto Sans Arabic", Tahoma, sans-serif;
   --page: #f4f1e9;
   --surface: #fffdf7;
   --surface-2: #ebe7dc;
