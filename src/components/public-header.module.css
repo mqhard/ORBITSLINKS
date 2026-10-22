@@ -1,26 +1,23 @@
-.header { grid-template-columns: auto 1fr auto; gap: 1.2rem; padding-inline: max(1.25rem, calc((100vw - 100rem) / 2)); }
+.header { grid-template-columns: auto minmax(0, 1fr) auto; gap: 1rem; padding-inline: max(1.25rem, calc((100vw - 100rem) / 2)); }
 .header :global(.wordmark) { white-space: nowrap; }
 .header :global(.desktop-nav) { justify-content: center; gap: 1rem; }
-.header :global(.header-controls) { gap: .35rem; }
+.header :global(.header-controls) { gap: .8rem; }
 .desktopActions { display: flex; align-items: center; gap: .5rem; }
 .pending { border: 0; background: none; color: var(--muted); font-size: .8rem; font-weight: 700; padding: 0; cursor: default; }
 .pending:disabled { opacity: 1; }
 .pending { display: grid; gap: .15rem; text-align: start; }
 .pending small { display: block; font-size: .6rem; font-weight: 400; }
-.workspace { border: 1px solid var(--line); border-radius: 999px; padding: .7rem .85rem; font-size: .78rem; font-weight: 700; text-decoration: none; white-space: nowrap; }
-.workspace:hover { border-color: var(--indigo); }
-.header .start { white-space: nowrap; }
+.header .start { display: inline-flex; white-space: nowrap; }
 .mobileMenu { display: none; }
 
 @media (max-width: 1380px) {
-  .header { grid-template-columns: 1fr auto; direction: ltr; min-height: 5rem; }
-  .header :global(.wordmark) { grid-column: 2; grid-row: 1; }
-  .header :global(.header-controls) { grid-column: 1; grid-row: 1; justify-content: flex-start; gap: .8rem; }
-  .header :global(.desktop-nav), .header :global(.theme-control), .desktopActions { display: none; }
-  .header :global(.menu-button) { display: flex; order: -1; min-width: 44px; min-height: 44px; justify-content: center; padding: .5rem; }
+  .header { grid-template-columns: minmax(0, 1fr) auto; min-height: 5rem; }
+  .header :global(.wordmark) { grid-column: 1; grid-row: 1; }
+  .header :global(.header-controls) { grid-column: 2; grid-row: 1; justify-content: flex-end; gap: .5rem; }
+  .header :global(.desktop-nav), .desktopActions { display: none; }
+  .header :global(.menu-button) { display: flex; min-width: 44px; min-height: 44px; justify-content: center; padding: .5rem; }
   .header :global(.menu-button[aria-expanded="true"] i) { transform: rotate(45deg); }
   .header :global(.menu-button[aria-expanded="true"] i)::after { width: 100%; inset-block-start: 0; transform: rotate(-90deg); }
-  .header :global(.locale-button) { min-height: 44px; }
   .mobileMenu {
     --ink: #f9f5e9;
     --muted: #aeb8c9;
@@ -66,14 +63,14 @@
   .mobileMenu nav .label { font: inherit; color: inherit; }
   .mobileMenu nav small { font-size: .65rem; color: var(--muted); }
   .mobileMenu nav b { font-size: 1rem; }
-  .mobileActions { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: .6rem; margin-block-start: 1.2rem; padding-block-start: 1rem; border-block-start: 1px solid var(--line); }
-  .mobileActions .workspace, .mobileActions .start { display: flex; justify-content: center; align-items: center; min-height: 44px; padding: .7rem .6rem; font-size: .8rem; text-align: center; }
+  .mobileActions { display: grid; grid-template-columns: 1fr; align-items: center; gap: .6rem; margin-block-start: 1.2rem; padding-block-start: 1rem; border-block-start: 1px solid var(--line); }
+  .mobileActions .start { display: flex; justify-content: center; align-items: center; min-height: 44px; padding: .7rem .6rem; font-size: .8rem; text-align: center; }
   .mobileActions > :only-child { grid-column: 1 / -1; }
   .mobileActions .start { background: var(--lime); color: #06152f; }
 }
 @media (max-width: 760px) {
   .header { min-height: 4.5rem; gap: .5rem; padding-inline: 1rem; }
-  .header :global(.header-controls) { gap: .35rem; }
+  .header :global(.header-controls) { gap: .8rem; }
   .header :global(.wordmark) { gap: .5rem; font-size: .64rem; letter-spacing: .08em; }
   .mobileMenu { inset-block-start: 4.5rem; }
 }

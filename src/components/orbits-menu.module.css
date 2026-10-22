@@ -1,0 +1,20 @@
+.root { position: relative; flex: none; }
+.trigger { display: grid; place-items: center; width: 44px; height: 44px; padding: 4px; border: 1px solid transparent; border-radius: 50%; background: transparent; color: var(--ink); transition: background-color 150ms ease, border-color 150ms ease; }
+.trigger .mark { width: 34px; }
+.trigger:hover { background: var(--surface-2); }
+.trigger[aria-expanded="true"] { background: var(--surface-2); border-color: var(--line); }
+.trigger:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+.panel { position: absolute; z-index: 80; inset-block-start: calc(100% + .75rem); inset-inline-end: 0; width: min(23rem, calc(100vw - 2rem)); max-height: calc(100dvh - 7rem); overflow-y: auto; overscroll-behavior: contain; padding: .4rem; border: 1px solid var(--line); border-radius: 1.1rem; background: var(--surface); color: var(--ink); box-shadow: var(--shadow); text-align: start; }
+.panel[hidden] { display: none; }
+.title { margin: 0; padding: 1rem .8rem; border-block-end: 1px solid var(--line); font-size: .85rem; font-weight: 750; }
+.accounts { display: grid; gap: .2rem; padding-block: .5rem; }
+.accounts a { display: grid; grid-template-columns: 20px minmax(0, 1fr) 20px; align-items: center; gap: .75rem; min-height: 48px; padding: .7rem .8rem; border-radius: .65rem; text-decoration: none; font-size: .86rem; }
+.arrow { color: var(--muted); }
+.arrow:dir(rtl) { transform: scaleX(-1); }
+.preferences { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: .3rem; padding-block-start: .5rem; border-block-start: 1px solid var(--line); }
+.preferences button { display: flex; align-items: center; gap: .55rem; min-height: 48px; min-width: 0; padding: .7rem .6rem; border: 0; border-radius: .65rem; background: transparent; color: var(--ink); text-align: start; font-size: .75rem; line-height: 1.5; }
+.preferences svg { flex: none; }
+.accounts a:hover, .preferences button:hover { background: var(--surface-2); }
+.panel :is(a, button):focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+@media (max-width: 400px) { .preferences { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .trigger { transition: none; } }

@@ -2,7 +2,8 @@
 
 import { BrandLogo } from "@/components/brand-logo";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { OrbitsMenu } from "./orbits-menu";
 import { homepageContent } from "@/content/homepage";
 import { useSitePreferences } from "@/components/site-preferences";
 import { orbitModules } from "@/content/workspace";
@@ -12,9 +13,14 @@ import styles from "./public-header.module.css";
 // Presentation state only. Pass a verified session here when the auth service is connected.
 // This flag controls navigation and must never be used as an authorization boundary.
 export function PublicHeader({ authenticated = false }: { authenticated?: boolean }) {
-  const { locale, setLocale, theme, setTheme } = useSitePreferences();
+  const { locale } = useSitePreferences();
   const content = homepageContent[locale];
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [openPanel, setOpenPanel] = useState<"navigation" | "account" | null>(null);
+  const menuOpen = openPanel === "navigation";
+  const setMenuOpen = (open: boolean) => setOpenPanel(open ? "navigation" : null);
+  const setAccountOpen = useCallback((open: boolean) => {
+    setOpenPanel(current => open ? "account" : current === "account" ? null : current);
+  }, []);
   const headerRef = useRef<HTMLElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -26,6 +32,10 @@ export function PublicHeader({ authenticated = false }: { authenticated?: boolea
       delete document.body.dataset.menuOpen;
     };
   }, [menuOpen]);
+
+  useEffect(() => {
+    if (openPanel === "account") headerRef.current?.querySelectorAll<HTMLDetailsElement>("details[open]").forEach(detail => { detail.open = false; });
+  }, [openPanel]);
 
   useEffect(() => {
     const desktop = window.matchMedia("(min-width: 1381px)");
@@ -66,8 +76,7 @@ export function PublicHeader({ authenticated = false }: { authenticated?: boolea
     return () => { document.removeEventListener("keydown", onKey); document.removeEventListener("click", onClick); };
   }, [menuOpen]);
 
-  const accountActions = <>
-    <a className={styles.workspace} href={authenticated ? headerActions.workspace.href : headerActions.login.href} onClick={() => setMenuOpen(false)}>{authenticated ? headerActions.workspace.label[locale] : headerActions.login.label[locale]}</a>
+  const primaryAction = <>
     {!authenticated && <a className={`header-cta ${styles.start}`} href={headerActions.start.href} onClick={() => setMenuOpen(false)}>{headerActions.start.label[locale]}<span aria-hidden="true">↗</span></a>}
   </>;
 
@@ -86,7 +95,7 @@ export function PublicHeader({ authenticated = false }: { authenticated?: boolea
           {publicNavigation.map(item => item.pending ? (
             <button className={styles.pending} type="button" disabled data-target-route={item.href} title={soon} key={item.id}>{item.label[locale]}<small>{soon}</small></button>
           ) : item.menu ? (
-            <details className="mega-menu" name="primary-navigation" key={item.id}>
+            <details className="mega-menu" name="primary-navigation" key={item.id} onToggle={event => { if (event.currentTarget.open) setAccountOpen(false); }}>
               <summary>{item.label[locale]} <span aria-hidden="true">⌄</span></summary>
               {item.menu === "platform" ? <div className="mega-panel"><div className="mega-intro"><span>CONNECTED BY DESIGN</span><h2>{locale === "ar" ? "عشرة مدارات. رؤية واحدة." : "Ten orbits. One clear view."}</h2><a href="/workspace/home/">{locale === "ar" ? "استكشف المساحة" : "Explore workspace"} ↗</a></div><div className="mega-links">{orbitModules.map(m => <a href={`/workspace/${m.id}/`} key={m.id}><b>{m.symbol}</b>{m.name[locale]}<span>↗</span></a>)}</div></div>
                 : <div className="mega-panel compact-mega">{solutionNavigation.map(link => <a href={link.href} key={link.href}>{link.label[locale]} ↗</a>)}</div>}
@@ -95,28 +104,11 @@ export function PublicHeader({ authenticated = false }: { authenticated?: boolea
         </nav>
 
         <div className="header-controls">
-          <button className="locale-button" type="button" lang={locale === "ar" ? "en" : "ar"} onClick={() => setLocale(locale === "ar" ? "en" : "ar")}>
-            {locale === "ar" ? "English" : "العربية"}
-          </button>
-          <label className="theme-control">
-            <span>{content.themeLabel}</span>
-            <select
-              value={theme}
-              onChange={(event) => {
-                const nextTheme = event.target.value;
-                if (nextTheme === "system" || nextTheme === "light" || nextTheme === "dark") setTheme(nextTheme);
-              }}
-              aria-label={content.themeLabel}
-            >
-              <option value="system">{content.themeOptions.system}</option>
-              <option value="light">{content.themeOptions.light}</option>
-              <option value="dark">{content.themeOptions.dark}</option>
-            </select>
-          </label>
-          <div className={styles.desktopActions}>{accountActions}</div>
-          <button ref={triggerRef} className="menu-button" type="button" aria-label={menuOpen ? content.close : content.menu} aria-expanded={menuOpen} aria-controls="mobile-menu" onClick={() => setMenuOpen((value) => !value)}>
+          <div className={styles.desktopActions}>{primaryAction}</div>
+          <button ref={triggerRef} className="menu-button" type="button" aria-label={menuOpen ? content.close : content.menu} aria-expanded={menuOpen} aria-controls="mobile-menu" onClick={() => setMenuOpen(!menuOpen)}>
             <i aria-hidden="true" />
           </button>
+          <OrbitsMenu open={openPanel === "account"} onOpenChange={setAccountOpen} authenticated={authenticated} />
         </div>
       </header>
 
@@ -129,7 +121,7 @@ export function PublicHeader({ authenticated = false }: { authenticated?: boolea
               : <a key={item.id} href={item.href} onClick={() => setMenuOpen(false)}>{contents}</a>;
           })}
         </nav>
-        <div className={styles.mobileActions}>{accountActions}</div>
+        <div className={styles.mobileActions}>{primaryAction}</div>
       </div>
     </>
   );
