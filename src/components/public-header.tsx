@@ -11,7 +11,7 @@ import styles from "./public-header.module.css";
 // Presentation state only. Pass a verified session here when the auth service is connected.
 // This flag controls navigation and must never be used as an authorization boundary.
 export function PublicHeader({ authenticated = false }: { authenticated?: boolean }) {
-  const { locale } = useSitePreferences();
+  const { locale, setLocale, theme, setTheme } = useSitePreferences();
   const content = homepageContent[locale];
   const [openPanel, setOpenPanel] = useState<"navigation" | "account" | null>(null);
   const menuOpen = openPanel === "navigation";
@@ -120,7 +120,31 @@ export function PublicHeader({ authenticated = false }: { authenticated?: boolea
               : <a key={item.id} href={item.href} onClick={() => setMenuOpen(false)}>{contents}</a>;
           })}
         </nav>
-        <div className={styles.mobileActions}>{primaryAction}</div>
+        <div className={styles.mobileActions}>
+          <a className={styles.mobileAccount} href={authenticated ? headerActions.workspace.href : headerActions.login.href} onClick={() => setMenuOpen(false)}>
+            {authenticated ? headerActions.workspace.label[locale] : headerActions.login.label[locale]}
+          </a>
+          {primaryAction}
+        </div>
+        <div className={styles.mobilePreferences}>
+          <div className={styles.preferenceField}>
+            <span>{locale === "ar" ? "اللغة" : "Language"}</span>
+            <button type="button" lang={locale === "ar" ? "en" : "ar"} onClick={() => setLocale(locale === "ar" ? "en" : "ar")}>
+              {locale === "ar" ? "English" : "العربية"}
+            </button>
+          </div>
+          <label className={styles.preferenceField}>
+            <span>{content.themeLabel}</span>
+            <select value={theme} onChange={event => {
+              const nextTheme = event.target.value;
+              if (nextTheme === "system" || nextTheme === "light" || nextTheme === "dark") setTheme(nextTheme);
+            }}>
+              <option value="system">{content.themeOptions.system}</option>
+              <option value="light">{content.themeOptions.light}</option>
+              <option value="dark">{content.themeOptions.dark}</option>
+            </select>
+          </label>
+        </div>
       </div>
     </>
   );
