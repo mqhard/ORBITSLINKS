@@ -13,7 +13,7 @@ export function SiteFooter() {
   return (
     <footer className="site-footer">
       <div className="footer-top">
-        <a className="footer-brand" href="#top"><BrandLogo />ORBITS LINKS</a>
+        <a className="footer-brand" href="#top"><BrandLogo />{content.siteName}</a>
         <p>{content.footer.summary}</p>
       </div>
       <div className="footer-groups">
@@ -26,10 +26,10 @@ export function SiteFooter() {
       </div>
       <div className="footer-bottom">
         <p>{content.footer.copyright}</p>
-        <div><a href="/workspace/automations/">Autopilot ↗</a><a href="/information/privacy/">{locale === "ar" ? "الخصوصية" : "Privacy"}</a></div>
+        <div><a href="/workspace/automations/">{locale === "ar" ? "الأتمتة ↗" : "Autopilot \u2197"}</a><a href="/information/privacy/">{locale === "ar" ? "الخصوصية" : "Privacy"}</a></div>
         <button type="button" onClick={() => setLocale(locale === "ar" ? "en" : "ar")}>{content.language}</button>
       </div>
-      <div className="footer-signature" aria-hidden="true">ORBITS<span>LINKS</span></div>
+      <div className="footer-signature" aria-hidden="true">{content.siteName.split(" ")[0]}<span>{content.siteName.split(" ").slice(1).join(" ")}</span></div>
     </footer>
   );
 }

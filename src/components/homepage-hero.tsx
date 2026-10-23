@@ -44,7 +44,7 @@ export function HomepageHero() {
         <div className="hero-content">
           <div className="eyebrow">
             <span className="eyebrow-dot" aria-hidden="true" />
-            ORBITS LINKS
+            {content.siteName}
           </div>
           <h1 id="hero-title">{content.headline}</h1>
           <p className="hero-description">{content.description}</p>

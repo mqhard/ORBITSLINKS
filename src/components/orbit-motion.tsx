@@ -1,4 +1,5 @@
 "use client";
+import { useSitePreferences } from "./site-preferences";
 import { useEffect, useRef, type ReactNode } from "react";
 export function OrbitMotion({ children, className = "" }: { children: ReactNode; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -19,5 +20,6 @@ export function OrbitMotion({ children, className = "" }: { children: ReactNode;
   return <div ref={ref} className={`orbit-motion ${className}`}>{children}</div>;
 }
 export function OrbitGraphic({ compact = false }: { compact?: boolean }) {
-  return <div className={`orbit-graphic${compact ? " compact" : ""}`} aria-hidden="true"><div className="orbital-ring ring-a"><i /></div><div className="orbital-ring ring-b"><i /></div><div className="orbital-ring ring-c"><i /></div><div className="orbital-core">O<span>LINKS</span></div><span className="orbital-coordinate coord-a">SIGNAL / 01</span><span className="orbital-coordinate coord-b">CONNECTED / ∞</span></div>;
+  const { locale } = useSitePreferences();
+  return <div className={`orbit-graphic${compact ? " compact" : ""}`} aria-hidden="true"><div className="orbital-ring ring-a"><i /></div><div className="orbital-ring ring-b"><i /></div><div className="orbital-ring ring-c"><i /></div><div className="orbital-core">O<span>{locale === "ar" ? "لينكس" : "LINKS"}</span></div><span className="orbital-coordinate coord-a">{locale === "ar" ? "إشارة / 01" : "SIGNAL / 01"}</span><span className="orbital-coordinate coord-b">{locale === "ar" ? "اتصال / ∞" : "CONNECTED / \u221e"}</span></div>;
 }

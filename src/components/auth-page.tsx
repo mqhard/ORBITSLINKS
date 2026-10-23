@@ -1,4 +1,5 @@
 "use client";
+import { brandName } from "@/content/brand";
 
 import Link from "next/link";
 import { Suspense, useState } from "react";
@@ -36,7 +37,7 @@ function AuthForm({ signup, buildNext }: { signup: boolean; buildNext?: string }
   return (
     <>
       <header className={styles.formHeading}>
-        <p className={styles.eyebrow}>{ar ? "حسابك في ORBITS" : "YOUR ORBITS ACCOUNT"}</p>
+        <p className={styles.eyebrow}>{ar ? "حسابك في اوربيتس لينكس" : "YOUR ORBITS ACCOUNT"}</p>
         <h1 id="auth-title">{signup ? (ar ? "ابدأ مدارك." : "Start your orbit.") : (ar ? "مرحبًا بعودتك." : "Welcome back.")}</h1>
         <p>{signup ? (ar ? "خطوتك الأولى نحو مساحة تجمع أدواتك وأهدافك." : "Your first step toward one space for your tools and goals.") : (ar ? "كل أدواتك وأهدافك، في مساحة واحدة." : "Your tools and goals, together in one space.")}</p>
       </header>
@@ -48,7 +49,7 @@ function AuthForm({ signup, buildNext }: { signup: boolean; buildNext?: string }
 
       <p id="account-availability" className={styles.notice}>{ar ? "تسجيل الدخول وإنشاء الحسابات سيتاحان قريبًا. يمكنك استعراض النموذج الآن؛ لن تُرسل بياناتك أو تُحفظ." : "Sign-in and account creation are coming soon. You can preview the form; your details will not be sent or saved."}</p>
 
-      {buildNext && <div className={styles.notice}><p>{ar ? "مخطط BUILD محفوظ على هذا المتصفح. ربطه بحسابك سيتاح عند تشغيل خدمة الحسابات." : "Your BUILD blueprint is saved in this browser. Account linking will be available when authentication is connected."}</p><Link href={buildNext}>{ar ? "العودة إلى تجربة مساحة BUILD المحلية" : "Return to the local BUILD workspace preview"} ↗</Link></div>}
+      {buildNext && <div className={styles.notice}><p>{ar ? "مخطط بيلد محفوظ على هذا المتصفح. ربطه بحسابك سيتاح عند تشغيل خدمة الحسابات." : "Your BUILD blueprint is saved in this browser. Account linking will be available when authentication is connected."}</p><Link href={buildNext}>{ar ? "العودة إلى تجربة مساحة بيلد المحلية" : "Return to the local BUILD workspace preview"} ↗</Link></div>}
 
       {/* UI only: never create a local session or persist credentials. Wire a real auth service before enabling submission. */}
       <form className={styles.form} aria-labelledby="auth-title" aria-describedby="account-availability" onSubmit={event => event.preventDefault()}>
@@ -89,11 +90,11 @@ export function AuthPage() {
           </section>
           <aside className={styles.intro}>
             <BrandLogo className={styles.brandSymbol} />
-            <p className={styles.eyebrow}>CONNECTED BY DESIGN</p>
+            <p className={styles.eyebrow}>{locale === "ar" ? "اتصال في صميم التصميم" : "CONNECTED BY DESIGN"}</p>
             <h2>{ar ? "كل مداراتك.\nفي مكان واحد." : "All your orbits.\nOne place."}</h2>
             <p>{ar ? "من الفكرة إلى الخطوة التالية، مساحة تمنح عملك اتجاهًا أوضح." : "From the first idea to the next step, a space that gives your work a clearer direction."}</p>
             <ul><li>{ar ? "أدوات مترابطة حول أهدافك" : "Connected tools around your goals"}</li><li>{ar ? "أفكارك وتقاريرك في مساحة واحدة" : "Your ideas and reports in one space"}</li><li>{ar ? "رؤية أوضح لخطوتك التالية" : "A clearer view of your next step"}</li></ul>
-            <span className={styles.signature}>ORBITS LINKS</span>
+            <span className={styles.signature}>{brandName[locale]}</span>
           </aside>
         </div>
         <Link className={styles.back} href="/">{ar ? "العودة إلى الموقع" : "Back to the website"}<span aria-hidden="true">↗</span></Link>

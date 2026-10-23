@@ -45,3 +45,5 @@
   .card { padding: 1rem; }
   .modeSwitch a { font-size: .78rem; }
 }
+
+:global(html[lang="ar"]) .signature { font-family:var(--font-arabic); letter-spacing:0; }

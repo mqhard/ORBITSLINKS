@@ -318,3 +318,17 @@
 @media (max-width: 480px) and (prefers-reduced-motion: reduce) {
   .scene[data-stage="0"] .node { transform: none; }
 }
+
+.localeButton { border:1px solid var(--v-line); border-radius:6px; padding:8px 10px; background:transparent; color:var(--v-navy); white-space:nowrap; font-size:12px; }
+.experience[dir="rtl"] { direction:rtl; font-family:var(--font-arabic); }
+.experience[dir="rtl"] :is(em,.paper strong,.process li > span,.stageNumber) { font-family:var(--font-arabic); font-style:normal; }
+.experience[dir="rtl"] :is(h1,h2,h3,h4,.brand,.eyebrow,.node,.capabilityList button) { letter-spacing:0; }
+.experience[dir="rtl"] :is(.heroCopy h1,.heroCopy h1 em,.footerStatement) { line-height:1.35; letter-spacing:0; }
+.experience[dir="rtl"] :is(.needButton,.stageControls button,.sceneActions button,.capabilityList button) { text-align:start; }
+.experience[dir="rtl"] .capabilityList button { padding-inline:0 12px; }
+.experience[dir="rtl"] .capabilityList button[aria-pressed="true"] { padding-inline-start:14px; }
+.experience[dir="rtl"] .related > span { margin-right:0; margin-inline-end:8px; }
+.experience[dir="rtl"] .systemNote > span:last-child { margin-left:0; margin-inline-start:auto; }
+.experience[dir="rtl"] .startCopy aside { border-left:0; border-inline-start:2px solid var(--v-gold); padding:0; padding-inline-start:18px; }
+.experience[dir="rtl"] .node { max-width:150px; white-space:normal; text-align:center; }
+@media(max-width:800px) { .header { gap:12px; flex-wrap:wrap; }.localeButton { margin-inline-start:auto; }.experience[dir="rtl"] .node small { margin-left:0; margin-inline-start:auto; } }

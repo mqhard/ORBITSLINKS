@@ -66,11 +66,11 @@ export function OrbitsMenu({ open, onOpenChange, authenticated }: OrbitsMenuProp
   }, [open, onOpenChange]);
 
   return <div className={styles.root} ref={rootRef}>
-    <button className={styles.trigger} type="button" ref={buttonRef} aria-label={ar ? "فتح قائمة ORBITS" : "Open ORBITS menu"} aria-expanded={open} aria-controls={id} onClick={() => onOpenChange(!open)}>
+    <button className={styles.trigger} type="button" ref={buttonRef} aria-label={ar ? "فتح قائمة اوربيتس لينكس" : "Open ORBITS menu"} aria-expanded={open} aria-controls={id} onClick={() => onOpenChange(!open)}>
       <BrandLogo className={styles.mark} />
     </button>
     <div className={styles.panel} id={id} ref={panelRef} hidden={!open} role="region" aria-labelledby={`${id}-title`}>
-      <p className={styles.title} id={`${id}-title`}>{ar ? "مساحتك في ORBITS" : "Your space on ORBITS"}</p>
+      <p className={styles.title} id={`${id}-title`}>{ar ? "مساحتك في اوربيتس لينكس" : "Your space on ORBITS"}</p>
       <div className={styles.accounts}>
         {authenticated ? <a href={headerActions.workspace.href} onClick={() => onOpenChange(false)}><MenuIcon name="user" /><span>{headerActions.workspace.label[locale]}</span><MenuIcon name="arrow" className={styles.arrow} /></a> : <>
           <a href={headerActions.login.href} onClick={() => onOpenChange(false)}><MenuIcon name="user" /><span>{ar ? "تسجيل الدخول" : "Log in"}</span><MenuIcon name="arrow" className={styles.arrow} /></a>

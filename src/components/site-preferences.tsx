@@ -9,6 +9,8 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { usePathname } from "next/navigation";
+import { brandName } from "@/content/brand";
 import type { Locale } from "@/content/homepage";
 
 export type ThemePreference = "system" | "light" | "dark";
@@ -27,6 +29,7 @@ interface SitePreferences {
 const SitePreferencesContext = createContext<SitePreferences | null>(null);
 
 export function SitePreferencesProvider({ children }: { children: ReactNode }) {
+  const pathname = usePathname();
   const [locale, setLocaleState] = useState<Locale>("ar");
   const [theme, setThemeState] = useState<ThemePreference>("system");
 
@@ -56,6 +59,30 @@ export function SitePreferencesProvider({ children }: { children: ReactNode }) {
     document.documentElement.lang = locale;
     document.documentElement.dir = locale === "ar" ? "rtl" : "ltr";
   }, [locale]);
+
+  useEffect(() => {
+    const sync = (event: StorageEvent) => {
+      if (event.key === "orbits-locale" && (event.newValue === "ar" || event.newValue === "en")) setLocaleState(event.newValue);
+      if (event.key === "orbits-theme" && event.newValue && isThemePreference(event.newValue)) setThemeState(event.newValue);
+    };
+    window.addEventListener("storage", sync);
+    return () => window.removeEventListener("storage", sync);
+  }, []);
+
+  useEffect(() => {
+    const ar = locale === "ar";
+    const section = pathname.startsWith("/build") ? ar ? "بيلد" : "Build"
+      : pathname.startsWith("/workspace/builds") ? ar ? "مشاريعي" : "My Builds"
+      : pathname.startsWith("/workspace") ? ar ? "مساحة العمل" : "Workspace"
+      : pathname.startsWith("/auth") ? ar ? "الحساب" : "Account"
+      : pathname.startsWith("/visibility") ? ar ? "الظهور الرقمي" : "Visibility"
+      : pathname.startsWith("/plans") ? ar ? "الخطط" : "Plans"
+      : pathname.startsWith("/start") ? ar ? "ابدأ مدارك" : "Start your orbit"
+      : pathname.startsWith("/resources") ? ar ? "الموارد" : "Resources"
+      : pathname.startsWith("/information") ? ar ? "معلومات الموقع" : "Site information"
+      : ar ? "الرؤية الرقمية" : "Digital Visibility Intelligence";
+    document.title = `${brandName[locale]} — ${section}`;
+  }, [locale, pathname]);
 
   useEffect(() => {
     const media = window.matchMedia("(prefers-color-scheme: dark)");

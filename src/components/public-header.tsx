@@ -97,7 +97,7 @@ export function PublicHeader({ authenticated = false }: { authenticated?: boolea
           ) : item.menu ? (
             <details className="mega-menu" name="primary-navigation" key={item.id} onToggle={event => { if (event.currentTarget.open) setAccountOpen(false); }}>
               <summary>{item.label[locale]} <span aria-hidden="true">⌄</span></summary>
-              {item.menu === "platform" ? <div className="mega-panel"><div className="mega-intro"><span>CONNECTED BY DESIGN</span><h2>{locale === "ar" ? "عشرة مدارات. رؤية واحدة." : "Ten orbits. One clear view."}</h2><a href="/workspace/home/">{locale === "ar" ? "استكشف المساحة" : "Explore workspace"} ↗</a></div><div className="mega-links">{orbitModules.map(m => <a href={`/workspace/${m.id}/`} key={m.id}><b>{m.symbol}</b>{m.name[locale]}<span>↗</span></a>)}</div></div>
+              {item.menu === "platform" ? <div className="mega-panel"><div className="mega-intro"><span>{locale === "ar" ? "اتصال في صميم التصميم" : "CONNECTED BY DESIGN"}</span><h2>{locale === "ar" ? "عشرة مدارات. رؤية واحدة." : "Ten orbits. One clear view."}</h2><a href="/workspace/home/">{locale === "ar" ? "استكشف المساحة" : "Explore workspace"} ↗</a></div><div className="mega-links">{orbitModules.map(m => <a href={`/workspace/${m.id}/`} key={m.id}><b>{m.symbol}</b>{m.name[locale]}<span>↗</span></a>)}</div></div>
                 : <div className="mega-panel compact-mega">{solutionNavigation.map(link => <a href={link.href} key={link.href}>{link.label[locale]} ↗</a>)}</div>}
             </details>
           ) : <a key={item.id} href={item.href}>{item.label[locale]}</a>)}

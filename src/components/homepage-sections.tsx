@@ -121,7 +121,7 @@ export function HomepageSections() {
             <a className="light-button" href="/workspace/ai/">{content.index.cta}<Arrow /></a>
           </div>
           <div className="index-card" role="img" aria-label={locale === "ar" ? "بيانات افتراضية لمؤشر الرؤية" : "Fictional visibility index data"}>
-            <div className="index-card-head"><span>ORBITS / AI INDEX</span><span>{locale === "ar" ? "بيانات افتراضية" : "Fictional data"}</span></div>
+            <div className="index-card-head"><span>{content.siteName} / {locale === "ar" ? "مؤشر الذكاء الاصطناعي" : "AI INDEX"}</span><span>{locale === "ar" ? "بيانات افتراضية" : "Fictional data"}</span></div>
             {content.index.rows.map((row, index) => (
               <div className="index-row" key={row[0]}>
                 <span className="rank">0{index + 1}</span><strong>{row[0]}</strong><div><i style={{ width: `${row[1]}%` }} /></div><b>{row[1]}</b>
@@ -153,14 +153,14 @@ export function HomepageSections() {
         <div className="resource-track" ref={resourcesRef}>
           {content.resources.items.map((item, index) => (
             <article className="resource-card" key={item[0]}>
-              <div className={`resource-cover resource-cover-${index % 3}`}><span>ORBITS / FIELD NOTES</span><b>{String(index + 1).padStart(2, "0")}</b><div className={`cover-glyph glyph-${index % 3}`}>{["◎", "↗", "✦"][index % 3]}</div><small>{item[1]}</small></div>
+              <div className={`resource-cover resource-cover-${index % 3}`}><span>{content.siteName} / {locale === "ar" ? "ملاحظات عملية" : "FIELD NOTES"}</span><b>{String(index + 1).padStart(2, "0")}</b><div className={`cover-glyph glyph-${index % 3}`}>{["◎", "↗", "✦"][index % 3]}</div><small>{item[1]}</small></div>
               <div className="resource-copy"><span>{item[1]}</span><h3>{item[0]}</h3><p>{item[2]}</p><a href={`/resources/${index + 1}/`} aria-label={item[0]}><Arrow /></a></div>
             </article>
           ))}
         </div>
       </section>
 
-      <section className="section public-autopilot"><OrbitMotion className="autopilot-promo"><div><p className="section-eyebrow">ORBIT AUTOPILOT</p><h2>{locale === "ar" ? "اسمنا مدار. وفعلنا اتصال." : "Orbits in name. Connected by action."}</h2><p>{locale === "ar" ? "أطلق سلسلة من الخطوات، راقب انتقال الإشارة، واستلم تقريرًا أو مسودة جاهزة للتطوير." : "Launch a connected workflow. Watch the signal move. Get a report or draft ready to develop."}</p><a href="/workspace/automations/" className="primary-button">{locale === "ar" ? "جرّب الأتمتة" : "Try Autopilot"}<Arrow /></a></div><OrbitGraphic compact /></OrbitMotion></section>
+      <section className="section public-autopilot"><OrbitMotion className="autopilot-promo"><div><p className="section-eyebrow">{locale === "ar" ? "مدار الأتمتة" : "ORBIT AUTOPILOT"}</p><h2>{locale === "ar" ? "اسمنا مدار. وفعلنا اتصال." : "Orbits in name. Connected by action."}</h2><p>{locale === "ar" ? "أطلق سلسلة من الخطوات، راقب انتقال الإشارة، واستلم تقريرًا أو مسودة جاهزة للتطوير." : "Launch a connected workflow. Watch the signal move. Get a report or draft ready to develop."}</p><a href="/workspace/automations/" className="primary-button">{locale === "ar" ? "جرّب الأتمتة" : "Try Autopilot"}<Arrow /></a></div><OrbitGraphic compact /></OrbitMotion></section>
       <section className="section final-cta" id="final-cta" aria-labelledby="final-title">
         <div className="final-orbit" aria-hidden="true"><i /><i /><i /></div>
         <p className="section-eyebrow">{content.finalCta.eyebrow}</p>

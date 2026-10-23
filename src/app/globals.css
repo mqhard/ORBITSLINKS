@@ -372,3 +372,10 @@ html[dir="rtl"] .marquee > div { animation-direction: reverse; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
 }
+
+/* Arabic labels use the approved Arabic face without Latin tracking. */
+html[lang="ar"] :is(.wordmark, .footer-brand, .eyebrow, .section-eyebrow, .platform-card-trigger, .solution-label, .index-card-head, .resource-cover > span, .preview-chrome span, .preview-health p, .journey-art-label, .journey-art-foot, .plan-card strong, .orbital-coordinate) { font-family:var(--font-arabic); letter-spacing:0; }
+html[lang="ar"] .wordmark { font-size:1rem; }
+html[lang="ar"] :is(h1,h2,h3) { letter-spacing:0; }
+html[lang="ar"] .footer-signature { font-family:var(--font-arabic); letter-spacing:0; direction:rtl; font-size:clamp(3rem,13vw,14rem); line-height:1.35; }
+html[lang="ar"] .footer-signature span { letter-spacing:0; margin-top:0; }
