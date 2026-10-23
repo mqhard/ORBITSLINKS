@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>ORBITS — استعراض المقاسات</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#e9edf1;color:#102338;font:15px system-ui,sans-serif}header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:14px 24px;background:#fff;border-bottom:1px solid #d4dae2}h1{font-size:17px;margin:0}small{display:block;font-size:12px;font-weight:400;color:#657185;margin-top:4px}nav,.controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap}button,select,.direct{font:inherit;border:1px solid #ced5df;border-radius:8px;background:#fff;color:#102338;padding:9px 12px;cursor:pointer;text-decoration:none}button[aria-pressed=true]{background:#102338;color:#fff;border-color:#102338}label{display:flex;align-items:center;gap:8px;font-size:13px}#stage{margin:24px auto;position:relative;border-radius:10px;box-shadow:0 10px 50px #10233822;background:#fff;overflow:hidden}iframe{display:block;border:0;transform-origin:top left;position:absolute;left:0;top:0;background:#fff}#shell{padding:0 20px;overflow:auto;direction:ltr}:is(button,select,a):focus-visible{outline:3px solid #5c63ff;outline-offset:3px}#status{margin:8px 24px;color:#657185;font-size:12px}@media(max-width:600px){header{padding:12px}.controls{width:100%}nav button{font-size:12px;padding:8px}#shell{padding:0 10px}}
+</style>
+</head>
+<body>
+<header>
+<div><h1 id="device-title">معاينة ORBITS</h1><small id="dimensions"></small></div>
+<div class="controls"><label>المقاس<select id="device"><option value="phone">الجوال</option><option value="ipad">الآيباد</option><option value="laptop">اللابتوب</option></select></label><button id="zoom" aria-pressed="false">الحجم الكامل</button><button id="reload">تحديث المعاينة</button><a class="direct" id="direct" href="/build/" target="_blank" rel="noopener">فتح الصفحة مباشرة ↗</a></div>
+<nav aria-label="صفحات المعاينة"><button data-page="build">ORBITS BUILD</button><button data-page="start">ابدأ مشروعًا</button><button data-page="builds">مشاريعي</button><button data-page="home">الرئيسية</button><button data-page="login">تسجيل الدخول</button><button data-page="signup">إنشاء حساب</button></nav>
+</header>
+<p id="status" role="status">المعاينة تعرض النسخة المنشورة على نفس الموقع.</p>
+<main id="shell"><div id="stage"><iframe id="site" title="معاينة ORBITS LINKS"></iframe></div></main>
+<noscript>يلزم تفعيل JavaScript لتغيير المقاس. <a href="/build/">افتح ORBITS BUILD مباشرة</a>.</noscript>
+<script>
+const sizes={phone:{name:'الجوال',w:390,h:844},ipad:{name:'الآيباد',w:820,h:1180},laptop:{name:'اللابتوب',w:1440,h:900}};
+const routes={build:'/build/',start:'/build/start/',builds:'/workspace/builds/',home:'/',login:'/auth/?mode=login',signup:'/auth/?mode=signup'};
+const params=new URLSearchParams(location.search);
+let deviceKey=Object.hasOwn(sizes,params.get('device'))?params.get('device'):'phone';
+let pageKey=Object.hasOwn(routes,params.get('page'))?params.get('page'):'build';
+let full=false;
+const frame=document.getElementById('site'),stage=document.getElementById('stage'),selector=document.getElementById('device'),direct=document.getElementById('direct');
+function setAddress(){const url=new URL(location.href);url.searchParams.set('device',deviceKey);url.searchParams.set('page',pageKey);history.replaceState(null,'',url)}
+function fit(){const device=sizes[deviceKey];const availableHeight=Math.max(240,innerHeight-document.querySelector('header').offsetHeight-80);const scale=full?1:Math.min(1,Math.max(200,innerWidth-40)/device.w,availableHeight/device.h);frame.style.width=device.w+'px';frame.style.height=device.h+'px';stage.style.width=device.w*scale+'px';stage.style.height=device.h*scale+'px';frame.style.transform='scale('+scale+')'}
+function setDevice(){const device=sizes[deviceKey];selector.value=deviceKey;document.title='ORBITS | '+device.name+' '+device.w+' × '+device.h;document.getElementById('device-title').textContent=device.name;document.getElementById('dimensions').textContent=device.w+' × '+device.h+' — النسخة المنشورة';frame.title='ORBITS LINKS — '+device.name;fit();setAddress()}
+function setPage(){frame.src=routes[pageKey];direct.href=routes[pageKey];document.querySelectorAll('[data-page]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.page===pageKey)));setAddress()}
+selector.onchange=()=>{deviceKey=selector.value;setDevice()};
+document.querySelectorAll('[data-page]').forEach(button=>{button.onclick=()=>{pageKey=button.dataset.page;setPage()}});
+document.getElementById('zoom').onclick=event=>{full=!full;event.currentTarget.setAttribute('aria-pressed',String(full));event.currentTarget.textContent=full?'ملاءمة للشاشة':'الحجم الكامل';fit()};
+document.getElementById('reload').onclick=()=>frame.contentWindow.location.reload();
+frame.addEventListener('load',()=>{try{const current=frame.contentWindow.location;if(current.origin===location.origin){direct.href=current.pathname+current.search+current.hash;document.getElementById('status').textContent='النسخة المنشورة — '+current.pathname}}catch{document.getElementById('status').textContent='يمكنك فتح الصفحة مباشرة من الرابط أعلاه.'}});
+addEventListener('resize',fit);setDevice();setPage();
+</script>
+</body>
+</html>
