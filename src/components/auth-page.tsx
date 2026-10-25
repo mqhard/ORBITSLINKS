@@ -49,7 +49,7 @@ function AuthForm({ signup, buildNext }: { signup: boolean; buildNext?: string }
 
       <p id="account-availability" className={styles.notice}>{ar ? "تسجيل الدخول وإنشاء الحسابات سيتاحان قريبًا. يمكنك استعراض النموذج الآن؛ لن تُرسل بياناتك أو تُحفظ." : "Sign-in and account creation are coming soon. You can preview the form; your details will not be sent or saved."}</p>
 
-      {buildNext && <div className={styles.notice}><p>{ar ? "مخطط بيلد محفوظ على هذا المتصفح. ربطه بحسابك سيتاح عند تشغيل خدمة الحسابات." : "Your BUILD blueprint is saved in this browser. Account linking will be available when authentication is connected."}</p><Link href={buildNext}>{ar ? "العودة إلى تجربة مساحة بيلد المحلية" : "Return to the local BUILD workspace preview"} ↗</Link></div>}
+      {buildNext && <div className={styles.notice}><p>{ar ? "مخطط بيلد محفوظ على هذا المتصفح. ربطه بحسابك سيتاح عند تشغيل خدمة الحسابات." : "Your BUILD blueprint is saved in this browser. Account linking will be available when authentication is connected."}</p><Link href={buildNext}>{ar ? "العودة إلى تجربة مساحة بيلد المحلية" : "Return to the local BUILD workspace preview"} </Link></div>}
 
       {/* UI only: never create a local session or persist credentials. Wire a real auth service before enabling submission. */}
       <form className={styles.form} aria-labelledby="auth-title" aria-describedby="account-availability" onSubmit={event => event.preventDefault()}>
@@ -57,7 +57,7 @@ function AuthForm({ signup, buildNext }: { signup: boolean; buildNext?: string }
         <div className={styles.field}><label htmlFor="email">{ar ? "البريد الإلكتروني" : "Email address"}</label><input id="email" name="email" type="email" autoComplete="email" inputMode="email" placeholder="you@example.com" required dir="ltr" /></div>
         <PasswordField signup={signup} />
         {signup && <PasswordField confirm signup />}
-        <button className={`primary-button ${styles.submit}`} type="submit" disabled aria-describedby="account-availability">{signup ? (ar ? "إنشاء الحساب" : "Create account") : (ar ? "تسجيل الدخول" : "Sign in")}<span aria-hidden="true">↗</span></button>
+        <button className={`primary-button ${styles.submit}`} type="submit" disabled aria-describedby="account-availability">{signup ? (ar ? "إنشاء الحساب" : "Create account") : (ar ? "تسجيل الدخول" : "Sign in")}</button>
       </form>
 
       <p className={styles.switchPrompt}>{signup ? (ar ? "لديك حساب بالفعل؟" : "Already have an account?") : (ar ? "ليس لديك حساب؟" : "New to ORBITS?")} <Link href={modeHref(signup ? "login" : "signup")} scroll={false}>{signup ? (ar ? "سجّل دخولك" : "Sign in") : (ar ? "أنشئ حسابًا" : "Create an account")}</Link></p>
@@ -97,7 +97,7 @@ export function AuthPage() {
             <span className={styles.signature}>{brandName[locale]}</span>
           </aside>
         </div>
-        <Link className={styles.back} href="/">{ar ? "العودة إلى الموقع" : "Back to the website"}<span aria-hidden="true">↗</span></Link>
+        <Link className={styles.back} href="/">{ar ? "العودة إلى الموقع" : "Back to the website"}</Link>
       </main>
     </>
   );

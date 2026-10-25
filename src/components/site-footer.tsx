@@ -1,5 +1,6 @@
 "use client";
 
+import { ContactIcon } from "@/components/contact-icon";
 import { BrandLogo } from "@/components/brand-logo";
 
 import { contactEmail, footerContent, socialLinks } from "@/content/footer";
@@ -22,16 +23,16 @@ export function SiteFooter() {
           <p className="footer-contact-description">{copy.description}</p>
         </div>
         <div className="footer-contact-actions">
-          <a className="primary-button" href={emailHref} aria-describedby="footer-email-hint">{copy.contact}<span aria-hidden="true">↗</span></a>
+          <a className="primary-button" href={emailHref} aria-describedby="footer-email-hint">{copy.contact}</a>
           <p id="footer-email-hint">{copy.emailHint}</p>
-          <a className="footer-build-link" href="/build/">{copy.explore}<span aria-hidden="true">{locale === "ar" ? "←" : "→"}</span></a>
+          <a className="footer-build-link" href="/build/">{copy.explore}</a>
         </div>
       </section>
       <div className="footer-top">
         <div className="footer-identity">
           <a className="footer-brand" href="/" aria-label={`${content.siteName} — ${copy.home}`}><BrandLogo />{content.siteName}</a>
           <p>{content.footer.summary}</p>
-          <a className="footer-email" href={`mailto:${contactEmail}`} dir="ltr">{contactEmail}</a>
+          <a className="footer-email" href={`mailto:${contactEmail}`} dir="ltr"><ContactIcon name="email" /><span>{contactEmail}</span></a>
         </div>
         <div className="footer-social">
           <h3>{copy.follow}</h3>
@@ -39,7 +40,7 @@ export function SiteFooter() {
           <nav aria-label={copy.socialLabel}>
             {socialLinks.map(({ name, href }) => (
               <a key={name} href={href} target="_blank" rel="noopener noreferrer" aria-label={`${name} — ${copy.external}`}>
-                <span lang="en" dir="ltr">{name}</span><span aria-hidden="true">↗</span>
+                <ContactIcon name={name} /><span lang="en" dir="ltr">{name}</span>
               </a>
             ))}
           </nav>
@@ -55,7 +56,7 @@ export function SiteFooter() {
       </div>
       <div className="footer-bottom">
         <p>{content.footer.copyright}</p>
-        <div><a href="/workspace/automations/">{locale === "ar" ? "الأتمتة ↗" : "Autopilot \u2197"}</a><a href="/information/privacy/">{locale === "ar" ? "الخصوصية" : "Privacy"}</a></div>
+        <div><a href="/workspace/automations/">{locale === "ar" ? "الأتمتة" : "Autopilot"}</a><a href="/information/privacy/">{locale === "ar" ? "الخصوصية" : "Privacy"}</a></div>
         <button type="button" onClick={() => setLocale(locale === "ar" ? "en" : "ar")}>{content.language}</button>
       </div>
     </footer>

@@ -7,7 +7,7 @@ export const socialLinks = [
   { name: "YouTube", href: "https://www.youtube.com/@orbitslinks" },
   { name: "Threads", href: "https://www.threads.com/@orbitslinks" },
   { name: "X", href: "https://x.com/Orbitslinks" },
-];
+] as const;
 
 export const footerContent = {
   ar: {

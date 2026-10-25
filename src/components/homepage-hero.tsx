@@ -82,9 +82,6 @@ export function HomepageHero() {
             </label>
             <button className="primary-button" type="submit">
               {content.submit}
-              <span aria-hidden="true" className="button-arrow">
-                ↗
-              </span>
             </button>
           </form>
           <p

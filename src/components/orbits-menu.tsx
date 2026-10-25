@@ -6,7 +6,7 @@ import { useSitePreferences } from "./site-preferences";
 import { headerActions } from "@/content/navigation";
 import styles from "./orbits-menu.module.css";
 
-type IconName = "user" | "plus" | "globe" | "moon" | "sun" | "arrow";
+type IconName = "user" | "plus" | "globe" | "moon" | "sun";
 function MenuIcon({ name, className }: { name: IconName; className?: string }) {
   return <svg className={className} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">
     {name === "user" && <><circle cx="12" cy="8" r="3.5" /><path d="M4.5 21v-2a7.5 7.5 0 0 1 15 0v2" /></>}
@@ -14,7 +14,6 @@ function MenuIcon({ name, className }: { name: IconName; className?: string }) {
     {name === "globe" && <><circle cx="12" cy="12" r="9" /><ellipse cx="12" cy="12" rx="4" ry="9" /><path d="M3 12h18" /></>}
     {name === "moon" && <path d="M20.5 14A9 9 0 0 1 10 3.5 9 9 0 1 0 20.5 14Z" />}
     {name === "sun" && <><circle cx="12" cy="12" r="4" /><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5" /></>}
-    {name === "arrow" && <path d="M5 12h14m-5-5 5 5-5 5" />}
   </svg>;
 }
 
@@ -72,9 +71,9 @@ export function OrbitsMenu({ open, onOpenChange, authenticated }: OrbitsMenuProp
     <div className={styles.panel} id={id} ref={panelRef} hidden={!open} role="region" aria-labelledby={`${id}-title`}>
       <p className={styles.title} id={`${id}-title`}>{ar ? "مساحتك في اوربيتس لينكس" : "Your space on ORBITS"}</p>
       <div className={styles.accounts}>
-        {authenticated ? <a href={headerActions.workspace.href} onClick={() => onOpenChange(false)}><MenuIcon name="user" /><span>{headerActions.workspace.label[locale]}</span><MenuIcon name="arrow" className={styles.arrow} /></a> : <>
-          <a href={headerActions.login.href} onClick={() => onOpenChange(false)}><MenuIcon name="user" /><span>{ar ? "تسجيل الدخول" : "Log in"}</span><MenuIcon name="arrow" className={styles.arrow} /></a>
-          <a href={headerActions.start.href} onClick={() => onOpenChange(false)}><MenuIcon name="plus" /><span>{ar ? "إنشاء حساب" : "Create an account"}</span><MenuIcon name="arrow" className={styles.arrow} /></a>
+        {authenticated ? <a href={headerActions.workspace.href} onClick={() => onOpenChange(false)}><MenuIcon name="user" /><span>{headerActions.workspace.label[locale]}</span></a> : <>
+          <a href={headerActions.login.href} onClick={() => onOpenChange(false)}><MenuIcon name="user" /><span>{ar ? "تسجيل الدخول" : "Log in"}</span></a>
+          <a href={headerActions.start.href} onClick={() => onOpenChange(false)}><MenuIcon name="plus" /><span>{ar ? "إنشاء حساب" : "Create an account"}</span></a>
         </>}
       </div>
       <div className={styles.preferences}>

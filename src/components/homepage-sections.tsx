@@ -7,10 +7,6 @@ import { homepageContent } from "@/content/homepage";
 import { OrbitMotion, OrbitGraphic } from "./orbit-motion";
 import { ProductVisual } from "./product-visual";
 
-function Arrow() {
-  return <span className="link-arrow" aria-hidden="true">↗</span>;
-}
-
 export function HomepageSections() {
   const { locale } = useSitePreferences();
   const content = homepageContent[locale];
@@ -45,7 +41,7 @@ export function HomepageSections() {
               <div className="platform-copy">
                 <h3>{card.title}</h3>
                 <p>{card.body}</p>
-                <a className="text-link" href={index === 0 ? "/workspace/home/" : "/workspace/automations/"}>{card.cta}<Arrow /></a>
+                <a className="text-link" href={index === 0 ? "/workspace/home/" : "/workspace/automations/"}>{card.cta}</a>
               </div>
             </article>
           ))}
@@ -66,7 +62,7 @@ export function HomepageSections() {
             <p className="section-eyebrow">{content.enterprise.eyebrow}</p>
             <h2 id="enterprise-title">{content.enterprise.title}</h2>
             <p>{content.enterprise.body}</p>
-            <a className="light-button" href="/information/enterprise/">{content.enterprise.cta}<Arrow /></a>
+            <a className="light-button" href="/information/enterprise/">{content.enterprise.cta}</a>
           </div>
         </div>
       </section>
@@ -76,7 +72,7 @@ export function HomepageSections() {
           <div><p className="section-eyebrow">{content.solutions.eyebrow}</p><h2 id="solutions-title">{content.solutions.title}</h2></div>
           <p>{content.solutions.intro}</p>
         </div>
-        <div className="carousel-controls"><button aria-label={locale === "ar" ? "الحلول السابقة" : "Previous solutions"} onClick={() => moveTrack(solutionsRef, -1)}>←</button><button aria-label={locale === "ar" ? "الحلول التالية" : "Next solutions"} onClick={() => moveTrack(solutionsRef, 1)}>→</button></div>
+        <div className="carousel-controls"><button aria-label={locale === "ar" ? "الحلول السابقة" : "Previous solutions"} onClick={() => moveTrack(solutionsRef, -1)}>{locale === "ar" ? "السابق" : "Previous"}</button><button aria-label={locale === "ar" ? "الحلول التالية" : "Next solutions"} onClick={() => moveTrack(solutionsRef, 1)}>{locale === "ar" ? "التالي" : "Next"}</button></div>
         <div className="solutions-list" ref={solutionsRef}>
           {content.solutions.items.map((item, index) => {
             const isOpen = openSolutions.includes(index);
@@ -90,7 +86,7 @@ export function HomepageSections() {
                 </button>
                 <div className="solution-product"><ProductVisual variant={index} title={item[0]} /></div>
                 <div className="solution-detail">
-                  <div><p>{item[2]}</p><a className="text-link" href={`/workspace/${solutionModules[index]}/`}>{content.solutions.cta}<Arrow /></a></div>
+                  <div><p>{item[2]}</p><a className="text-link" href={`/workspace/${solutionModules[index]}/`}>{content.solutions.cta}</a></div>
                 </div>
               </article>
             );
@@ -106,7 +102,7 @@ export function HomepageSections() {
         <div className="metric-list">
           {content.data.items.map((item, index) => (
             <button className={activeMetric === index ? "is-active" : ""} type="button" key={item[0]} onClick={() => setActiveMetric(index)} aria-pressed={activeMetric === index}>
-              <span>{item[0]}</span><strong>{item[1]}</strong><p>{item[2]}</p><i aria-hidden="true">↗</i>
+              <span>{item[0]}</span><strong>{item[1]}</strong><p>{item[2]}</p>
             </button>
           ))}
         </div>
@@ -118,7 +114,7 @@ export function HomepageSections() {
             <p className="section-eyebrow">{content.index.eyebrow}</p>
             <h2 id="index-title">{content.index.title}</h2>
             <p>{content.index.body}</p>
-            <a className="light-button" href="/workspace/ai/">{content.index.cta}<Arrow /></a>
+            <a className="light-button" href="/workspace/ai/">{content.index.cta}</a>
           </div>
           <div className="index-card" role="img" aria-label={locale === "ar" ? "بيانات افتراضية لمؤشر الرؤية" : "Fictional visibility index data"}>
             <div className="index-card-head"><span>{content.siteName} / {locale === "ar" ? "مؤشر الذكاء الاصطناعي" : "AI INDEX"}</span><span>{locale === "ar" ? "بيانات افتراضية" : "Fictional data"}</span></div>
@@ -149,24 +145,24 @@ export function HomepageSections() {
           <div><p className="section-eyebrow">{content.resources.eyebrow}</p><h2 id="resources-title">{content.resources.title}</h2></div>
           <p>{content.resources.note}</p>
         </div>
-        <div className="carousel-controls"><button aria-label={locale === "ar" ? "الموارد السابقة" : "Previous resources"} onClick={() => moveTrack(resourcesRef, -1)}>←</button><button aria-label={locale === "ar" ? "الموارد التالية" : "Next resources"} onClick={() => moveTrack(resourcesRef, 1)}>→</button></div>
+        <div className="carousel-controls"><button aria-label={locale === "ar" ? "الموارد السابقة" : "Previous resources"} onClick={() => moveTrack(resourcesRef, -1)}>{locale === "ar" ? "السابق" : "Previous"}</button><button aria-label={locale === "ar" ? "الموارد التالية" : "Next resources"} onClick={() => moveTrack(resourcesRef, 1)}>{locale === "ar" ? "التالي" : "Next"}</button></div>
         <div className="resource-track" ref={resourcesRef}>
           {content.resources.items.map((item, index) => (
             <article className="resource-card" key={item[0]}>
               <div className={`resource-cover resource-cover-${index % 3}`}><span>{content.siteName} / {locale === "ar" ? "ملاحظات عملية" : "FIELD NOTES"}</span><b>{String(index + 1).padStart(2, "0")}</b><div className={`cover-glyph glyph-${index % 3}`}>{["◎", "↗", "✦"][index % 3]}</div><small>{item[1]}</small></div>
-              <div className="resource-copy"><span>{item[1]}</span><h3>{item[0]}</h3><p>{item[2]}</p><a href={`/resources/${index + 1}/`} aria-label={item[0]}><Arrow /></a></div>
+              <div className="resource-copy"><span>{item[1]}</span><h3>{item[0]}</h3><p>{item[2]}</p><a href={`/resources/${index + 1}/`} aria-label={`${locale === "ar" ? "اقرأ" : "Read"}: ${item[0]}`}>{locale === "ar" ? "اقرأ المقال" : "Read article"}</a></div>
             </article>
           ))}
         </div>
       </section>
 
-      <section className="section public-autopilot"><OrbitMotion className="autopilot-promo"><div><p className="section-eyebrow">{locale === "ar" ? "مدار الأتمتة" : "ORBIT AUTOPILOT"}</p><h2>{locale === "ar" ? "اسمنا مدار. وفعلنا اتصال." : "Orbits in name. Connected by action."}</h2><p>{locale === "ar" ? "أطلق سلسلة من الخطوات، راقب انتقال الإشارة، واستلم تقريرًا أو مسودة جاهزة للتطوير." : "Launch a connected workflow. Watch the signal move. Get a report or draft ready to develop."}</p><a href="/workspace/automations/" className="primary-button">{locale === "ar" ? "جرّب الأتمتة" : "Try Autopilot"}<Arrow /></a></div><OrbitGraphic compact /></OrbitMotion></section>
+      <section className="section public-autopilot"><OrbitMotion className="autopilot-promo"><div><p className="section-eyebrow">{locale === "ar" ? "مدار الأتمتة" : "ORBIT AUTOPILOT"}</p><h2>{locale === "ar" ? "اسمنا مدار. وفعلنا اتصال." : "Orbits in name. Connected by action."}</h2><p>{locale === "ar" ? "أطلق سلسلة من الخطوات، راقب انتقال الإشارة، واستلم تقريرًا أو مسودة جاهزة للتطوير." : "Launch a connected workflow. Watch the signal move. Get a report or draft ready to develop."}</p><a href="/workspace/automations/" className="primary-button">{locale === "ar" ? "جرّب الأتمتة" : "Try Autopilot"}</a></div><OrbitGraphic compact /></OrbitMotion></section>
       <section className="section final-cta" id="final-cta" aria-labelledby="final-title">
         <div className="final-orbit" aria-hidden="true"><i /><i /><i /></div>
         <p className="section-eyebrow">{content.finalCta.eyebrow}</p>
         <h2 id="final-title">{content.finalCta.title}</h2>
         <p>{content.finalCta.body}</p>
-        <a className="primary-button" href="/start/">{content.finalCta.cta}<Arrow /></a>
+        <a className="primary-button" href="/start/">{content.finalCta.cta}</a>
       </section>
     </>
   );

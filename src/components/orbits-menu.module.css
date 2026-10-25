@@ -8,9 +8,7 @@
 .panel[hidden] { display: none; }
 .title { margin: 0; padding: 1rem .8rem; border-block-end: 1px solid var(--line); font-size: .85rem; font-weight: 750; }
 .accounts { display: grid; gap: .2rem; padding-block: .5rem; }
-.accounts a { display: grid; grid-template-columns: 20px minmax(0, 1fr) 20px; align-items: center; gap: .75rem; min-height: 48px; padding: .7rem .8rem; border-radius: .65rem; text-decoration: none; font-size: .86rem; }
-.arrow { color: var(--muted); }
-.arrow:dir(rtl) { transform: scaleX(-1); }
+.accounts a { display: grid; grid-template-columns: 20px minmax(0, 1fr); align-items: center; gap: .75rem; min-height: 48px; padding: .7rem .8rem; border-radius: .65rem; text-decoration: none; font-size: .86rem; }
 .preferences { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: .3rem; padding-block-start: .5rem; border-block-start: 1px solid var(--line); }
 .preferences button { display: flex; align-items: center; gap: .55rem; min-height: 48px; min-width: 0; padding: .7rem .6rem; border: 0; border-radius: .65rem; background: transparent; color: var(--ink); text-align: start; font-size: .75rem; line-height: 1.5; }
 .preferences svg { flex: none; }

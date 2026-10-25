@@ -177,9 +177,9 @@ export function VisibilityExperience() {
         <a href="#visibility-top" className={s.brand} aria-label={v("ORBITS LINKS — back to top")}><BrandLogo className={s.symbol} /><span>{v("ORBITS")}<span className={s.brandLight}> {v("LINKS")}</span></span></a>
         <button className={s.localeButton} onClick={() => setLocale(locale === "ar" ? "en" : "ar")} lang={locale === "ar" ? "en" : "ar"}>{locale === "ar" ? "English" : "العربية"}</button>
         <nav className={s.desktopNav} aria-label={v("Visibility navigation")}><a href="#connections">{v("The connections")}</a><a href="#practice">{v("In practice")}</a><a href="#approach">{v("Our approach")}</a></nav>
-        <a href="#starting-point" className={s.headerCta}>{v("Start with your need")} <Arrow diagonal /></a>
+        <a href="#starting-point" className={s.headerCta}>{v("Start with your need")} </a>
         <button className={s.menuButton} aria-expanded={menuOpen} aria-controls="visibility-menu" onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? v("Close −") : v("Menu +")}</button>
-        {menuOpen && <nav id="visibility-menu" className={s.mobileNav} aria-label={v("Mobile visibility navigation")}>{[["#connections", v("The connections")], ["#practice", v("In practice")], ["#approach", v("Our approach")], ["#starting-point", v("Start with your need")]].map(([href, text]) => <a href={href} key={href} onClick={() => setMenuOpen(false)}>{text}<Arrow /></a>)}</nav>}
+        {menuOpen && <nav id="visibility-menu" className={s.mobileNav} aria-label={v("Mobile visibility navigation")}>{[["#connections", v("The connections")], ["#practice", v("In practice")], ["#approach", v("Our approach")], ["#starting-point", v("Start with your need")]].map(([href, text]) => <a href={href} key={href} onClick={() => setMenuOpen(false)}>{text}</a>)}</nav>}
       </header>
 
       <main id="visibility-main">
@@ -190,10 +190,10 @@ export function VisibilityExperience() {
             <p className={s.promise}>{v("What you have is the center.")}<br />{v("We build around it what makes you capable of more.")}</p>
             <div className={s.needEntry}>
               <p className={s.needLabel}>{v("What would you like to make possible?")}</p>
-              <button id="visibility-need" onClick={begin} className={s.needButton}>{v("Help more people find us.")}<span aria-hidden="true">↗</span></button>
+              <button id="visibility-need" onClick={begin} className={s.needButton}>{v("Help more people find us.")}</button>
               <p>{v("Explore one need. See the right capabilities connect.")}</p>
             </div>
-            <div className={s.heroFoot}><span>{v("01 / VISIBILITY")}</span><a href="#connections">{v("Explore the connections")} <span aria-hidden="true">↓</span></a></div>
+            <div className={s.heroFoot}><span>{v("01 / VISIBILITY")}</span><a href="#connections">{v("Explore the connections")} </a></div>
           </div>
 
           <div className={s.heroVisual}>
@@ -209,9 +209,9 @@ export function VisibilityExperience() {
                 <button key={item.id} className={`${s.node} ${activeId === item.id ? s.selectedNode : ""}`} style={{ "--x": `${item.x}%`, "--y": `${item.y}%`, "--node-index": index } as CSSProperties} aria-pressed={activeId === item.id} aria-controls="capability-detail" onClick={() => selectCapability(item.id)}><i /><span>{item.name}</span><small>0{index + 1}</small></button>,
               )}</div>
             </div>
-            <div className={s.formationInfo} aria-live="polite" aria-atomic="true"><span className={s.stageNumber}>0{stage + 1}</span><div><h2>{localizedStages[stage].title}</h2><p>{stage === 3 ? `${active.name} ${locale === "ar" ? "ترتبط مع" : "connects with"} ${active.connects.map(id => localizedCapabilities.find(item => item.id === id)?.name).join(locale === "ar" ? "، " : ", ")}.` : localizedStages[stage].caption}</p>{stage === 3 && <a className={s.sceneDetailLink} href="#connections">{v("Explore")} {active.name} <span aria-hidden="true">↓</span></a>}</div></div>
+            <div className={s.formationInfo} aria-live="polite" aria-atomic="true"><span className={s.stageNumber}>0{stage + 1}</span><div><h2>{localizedStages[stage].title}</h2><p>{stage === 3 ? `${active.name} ${locale === "ar" ? "ترتبط مع" : "connects with"} ${active.connects.map(id => localizedCapabilities.find(item => item.id === id)?.name).join(locale === "ar" ? "، " : ", ")}.` : localizedStages[stage].caption}</p>{stage === 3 && <a className={s.sceneDetailLink} href="#connections">{v("Explore")} {active.name} </a>}</div></div>
             <div className={s.stageControls} role="group" aria-label={v("Formation stages")}>{localizedStages.map((item, index) => <button key={item.name} aria-pressed={stage === index} onClick={() => chooseStage(index)}><span>0{index + 1}</span>{item.name}</button>)}</div>
-            <div className={s.sceneActions}><button onClick={() => playing ? setPlaying(false) : begin()}>{playing ? v("Pause sequence") : stage > 0 ? v("Replay formation") : v("Play formation")}<span aria-hidden="true">{playing ? "Ⅱ" : "↗"}</span></button><button onClick={() => chooseStage(3)}>{v("Skip to the complete system")} <span aria-hidden="true">→</span></button></div>
+            <div className={s.sceneActions}><button onClick={() => playing ? setPlaying(false) : begin()}>{playing ? v("Pause sequence") : stage > 0 ? v("Replay formation") : v("Play formation")}</button><button onClick={() => chooseStage(3)}>{v("Skip to the complete system")} </button></div>
           </div>
         </section>
 
@@ -224,14 +224,14 @@ export function VisibilityExperience() {
         <section className={s.connections} id="connections" aria-labelledby="connections-title">
           <div className={s.sectionHeading}><div><p className={s.eyebrow}>{v("01 / THE VISIBILITY ORBIT")}</p><h2 id="connections-title">{v("Seven capabilities.")}<br /><em>{v("One shared purpose.")}</em></h2></div><p>{v("Explore a capability to see what it solves,")}<br className={s.desktopOnly} /> {v("what it connects and what it can produce.")}</p></div>
           <div className={s.capabilityLayout}>
-            <div className={s.capabilityList} role="group" aria-label={v("Capability details")}>{localizedCapabilities.map((item, index) => <button key={item.id} onClick={() => setActiveId(item.id)} aria-pressed={activeId === item.id} aria-controls="capability-detail"><span>0{index + 1}</span>{item.name}<Arrow /></button>)}</div>
+            <div className={s.capabilityList} role="group" aria-label={v("Capability details")}>{localizedCapabilities.map((item, index) => <button key={item.id} onClick={() => setActiveId(item.id)} aria-pressed={activeId === item.id} aria-controls="capability-detail"><span>0{index + 1}</span>{item.name}</button>)}</div>
             <article className={s.capabilityDetail} id="capability-detail" aria-live="polite" aria-atomic="true">
               <div className={s.detailTop}><span>{active.name}</span><span>{v("CAPABILITY / CONCEPT")}</span></div>
               <h3>{active.question}</h3>
               <p>{active.solves}</p>
-              <div className={s.related}><span>{v("Works with")}</span>{active.connects.map((id) => <button key={id} onClick={() => setActiveId(id)}>{localizedCapabilities.find((item) => item.id === id)?.name}<Arrow diagonal /></button>)}</div>
+              <div className={s.related}><span>{v("Works with")}</span>{active.connects.map((id) => <button key={id} onClick={() => setActiveId(id)}>{localizedCapabilities.find((item) => item.id === id)?.name}</button>)}</div>
               <dl><div><dt>{v("What is included")}</dt><dd>{active.includes}</dd></div><div><dt>{v("What you receive")}</dt><dd>{active.output}</dd></div></dl>
-              <a href="#starting-point" className={s.textLink}>{v("Build this around what you already have")} <Arrow /></a>
+              <a href="#starting-point" className={s.textLink}>{v("Build this around what you already have")} </a>
             </article>
           </div>
           <div className={s.systemNote}><span className={s.smallMark}>↗</span><p><strong>{v("A connected visibility system")}</strong> {v("built around how people search, ask, discover, and decide.")}</p><span>{v("VISIBILITY ORBIT")}</span></div>
@@ -266,13 +266,13 @@ export function VisibilityExperience() {
               <fieldset><legend>{v("What do you already have?")} <small>{v("Select any that apply")}</small></legend><div className={s.foundationChoices}>{existingFoundations.map((item) => <label key={item}><input type="checkbox" checked={foundations.includes(item)} onChange={(event) => setFoundations(event.target.checked ? [...foundations, item] : foundations.filter((value) => value !== item))} /><span>{v(item)}</span></label>)}</div></fieldset>
               <label className={s.fieldLabel} htmlFor="need-context">{v("What would better visibility make possible?")} <small>{v("Optional")}</small></label>
               <textarea id="need-context" rows={3} maxLength={1200} placeholder={v("What would you like to change or understand?")} value={context} onChange={(event) => setContext(event.target.value)} />
-              <button className={s.primaryButton} type="submit">{v("Create my starting brief")} <Arrow /></button><p className={s.formFoot}>{v("A starting point, not a commitment.")}</p>
-            </form> : <div className={s.summary} ref={summaryRef} tabIndex={-1} aria-labelledby="brief-title"><span className={s.eyebrow}>{v("YOUR STARTING BRIEF / READY")}</span><h3 id="brief-title">{v("A clearer place")}<br />{v("to begin.")}</h3><p>{v("This brief is only on this page until you download or copy it. It has not been sent to ORBITS LINKS.")}</p><pre>{summary}</pre><div className={s.summaryActions}><button className={s.primaryButton} onClick={downloadBrief}>{v("Download brief")} <span aria-hidden="true">↓</span></button><button onClick={copyBrief}>{v("Copy brief")}</button><button onClick={() => setPrepared(false)}>{v("Edit my answers")}</button></div><p role="status">{v(copied)}</p></div>}
+              <button className={s.primaryButton} type="submit">{v("Create my starting brief")} </button><p className={s.formFoot}>{v("A starting point, not a commitment.")}</p>
+            </form> : <div className={s.summary} ref={summaryRef} tabIndex={-1} aria-labelledby="brief-title"><span className={s.eyebrow}>{v("YOUR STARTING BRIEF / READY")}</span><h3 id="brief-title">{v("A clearer place")}<br />{v("to begin.")}</h3><p>{v("This brief is only on this page until you download or copy it. It has not been sent to ORBITS LINKS.")}</p><pre>{summary}</pre><div className={s.summaryActions}><button className={s.primaryButton} onClick={downloadBrief}>{v("Download brief")} </button><button onClick={copyBrief}>{v("Copy brief")}</button><button onClick={() => setPrepared(false)}>{v("Edit my answers")}</button></div><p role="status">{v(copied)}</p></div>}
           </div>
         </section>
       </main>
 
-      <footer className={s.footer}><div><a href="#visibility-top" className={s.brand}><BrandLogo className={s.symbol} /><span>{v("ORBITS LINKS")}</span></a><p>{v("Worlds of Knowledge and Capabilities.")}</p></div><div><span>{v("VISIBILITY / EXPERIENCE PROTOTYPE")}</span><a href="/">{v("Return to the existing site")} <Arrow diagonal /></a><a href="#visibility-top">{v("Back to the beginning ↑")}</a></div><p className={s.footerStatement}>{v("What you have")}<br />{v("is")} <em>{v("the center.")}</em></p></footer>
+      <footer className={s.footer}><div><a href="#visibility-top" className={s.brand}><BrandLogo className={s.symbol} /><span>{v("ORBITS LINKS")}</span></a><p>{v("Worlds of Knowledge and Capabilities.")}</p></div><div><span>{v("VISIBILITY / EXPERIENCE PROTOTYPE")}</span><a href="/">{v("Return to the existing site")} </a><a href="#visibility-top">{v("Back to the beginning")}</a></div><p className={s.footerStatement}>{v("What you have")}<br />{v("is")} <em>{v("the center.")}</em></p></footer>
     </div>
   );
 }
